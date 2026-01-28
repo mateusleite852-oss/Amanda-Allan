@@ -1,0 +1,81 @@
+
+/* Tailwind está via CDN, então aqui é só ajuste fino */
+
+html, body {
+  scroll-behavior: smooth;
+}
+
+/* Evita seleção acidental em botões pequenos */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.select-premium{
+  width: 100%;
+  margin-top: 0.5rem;
+
+  border-radius: 1rem; /* rounded-2xl */
+  border: 1px solid #e7dccf;
+
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.75rem 1rem; /* py-3 px-4 */
+
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  outline: none;
+
+  transition: all 200ms ease;
+  appearance: none; /* remove estilo padrão */
+}
+
+/* hover */
+.select-premium:hover {
+  border-color: #d9c6b3;
+}
+
+/* focus premium */
+.select-premium:focus {
+  border-color: #c9b79c;
+  box-shadow:
+    0 0 0 4px rgba(201, 183, 156, 0.20),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.input-premium{
+  width: 100%;
+  margin-top: 0.5rem;
+
+  border-radius: 1rem; /* rounded-2xl */
+  border: 1px solid #e7dccf;
+
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.75rem 1rem; /* py-3 px-4 */
+
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  outline: none;
+
+  transition: all 200ms ease;
+}
+
+/* hover */
+.input-premium:hover {
+  border-color: #d9c6b3;
+}
+
+/* focus premium */
+.input-premium:focus {
+  border-color: #c9b79c;
+  box-shadow:
+    0 0 0 4px rgba(201, 183, 156, 0.20),
+    0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+/* placeholder mais elegante */
+.input-premium::placeholder {
+  color: #a8a29e; /* stone-400 */
+}

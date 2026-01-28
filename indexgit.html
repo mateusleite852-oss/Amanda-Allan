@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amanda & Allan | Nosso Casamento</title>
+
+  <!-- TAILWIND -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="./styles.css" />
+  <!-- FONTS -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+
+  <!-- SCRIPT GLOBAL (showTab corrigido) -->
+  <script>
+    function showTab(id) {
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.add('hidden');
+      });
+
+      const active = document.getElementById(id);
+      if (active) active.classList.remove('hidden');
+
+      // Re-render presentes ao abrir a aba
+      if (id === 'presentes' && typeof renderPresentes === 'function') {
+        renderPresentes();
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Abre home por padrão
+      showTab('home');
+
+      // Garante que presentes seja carregado
+      if (typeof renderPresentes === 'function') {
+        renderPresentes();
+      }
+    });
+  </script>
+</head>
+
+<body class="bg-[#f7f5f2] text-neutral-800" >
+
+  <!-- NAV -->
+  <nav class="bg-white shadow fixed w-full z-10">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+      <button onclick="showTab('home')" class="hover:opacity-70 transition">
+        <span class="font-semibold text-lg">Amanda & Allan</span>
+      </button>
+      <div class="space-x-6 text-sm">
+        <button onclick="showTab('home')" class="hover:opacity-70 transition">Home</button>
+        <button onclick="showTab('presentes')" class="hover:opacity-70 transition">Presentes</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="pt-28 max-w-6xl mx-auto px-4 sm:px-6">
+
+    <!-- HOME -->
+    <section id="home" class="tab">
+
+      <!-- HERO -->
+      <div class="relative bg-white rounded-3xl shadow overflow-hidden mb-20">
+        <div class="h-[55vh] sm:h-[650px]">
+          <img
+            src="./home.png"
+            alt="Foto home"
+            class="w-full h-[55vh] sm:h-[650px] object-cover rounded-3xl"
+          />
+          <div class="absolute inset-0 bg-black/20" ></div>
+        </div>
+
+        <!-- TEXTO CENTRAL -->
+        <div class="absolute inset-0 flex flex-col items-center justify-end pb-20">
+          <div class="text-center text-white max-w-3xl px-4">
+
+            <h1 class="text-4xl sm:text-6xl mb-8" style="font-family: 'Great Vibes', cursive;">
+Amanda & Allan</h1>
+
+            <p class="text-sm sm:text-xl mb-8">
+              Estamos muito felizes em dividir esse momento com você
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- NOSSA HISTÓRIA - TIMELINE -->
+      <section class="mb-24 ">
+
+        <div class="text-center mb-14">
+          <p class="uppercase tracking-[0.25em] text-xs text-neutral-500 mb-3">Nossa História</p>
+        </div>
+
+        <div class="relative space-y-16">
+
+          <!-- LINHA -->
+          <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-neutral-300"></div>
+
+          <!-- ITEM 1 -->
+          <div class="flex flex-row md:flex-row items-center gap-4 sm:gap-6">
+
+            <div class="md:w-1/2 md:text-right">
+              <img src="./l1.jpg" class="w-full h-64 sm:h-80 object-cover rounded-3xl shadow" />
+            </div>
+
+            <div class="hidden md:block w-4 h-4 bg-[#c9b79c] rounded-full"></div>
+
+            <div class="flex-1 md:w-1/2">
+              <p class="text-xs text-neutral-500 mb-1">05/2025</p>
+              <h3 class="text-xl font-semibold mb-2">Quando nos conhecemos</h3>
+              <p class="text-neutral-600 text-sm">Sem saber que estaríamos ligados para o resto da vida.</p>
+            </div>
+
+          </div>
+
+          <!-- ITEM 2 -->
+          <div class="flex flex-row-reverse md:flex-row-reverse items-center gap-4 sm:gap-6">
+            <div class="md:w-1/2">
+              <img src="./l2.jpeg" class="w-32 h-32 sm:w-full sm:h-80 object-cover rounded-3xl shadow" />
+            </div>
+
+            <div class="hidden md:block w-4 h-4 bg-[#c9b79c] rounded-full"></div>
+
+            <div class="flex-1 md:w-1/2 md:text-right">
+              <p class="text-xs text-neutral-500 mb-1">11/2025</p>
+              <h3 class="text-xl font-semibold mb-2">Pedido de namoro</h3>
+              <p class="text-neutral-600 text-sm">Momento mágico de nossas vidas.</p>
+            </div>
+
+          </div>
+
+          <!-- ITEM 3 -->
+          <div class="flex flex-row md:flex-row items-center gap-4 sm:gap-6">
+
+            <div class="md:w-1/2 md:text-right">
+              <img src="./l3.jpg" class="w-full object-cover rounded-3xl shadow" />
+            </div>
+
+            <div class="hidden md:block w-4 h-4 bg-[#c9b79c] rounded-full"></div>
+
+            <div class="flex-1md:w-1/2">
+              <p class="text-xs text-neutral-500 mb-1">12/2025</p>
+              <h3 class="text-xl font-semibold mb-2">Pedido de casamento</h3>
+              <p class="text-neutral-600 text-sm">Novo começo.</p>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- O GRANDE DIA -->
+      <section class="bg-white rounded-3xl shadow p-6 sm:p-12 mb-20 text-center">
+
+        <h2 class="text-3xl sm:text-4xl font-serif mb-6">O grande dia está chegando</h2>
+
+        <p class="text-base sm:text-lg mb-8 text-neutral-600">
+          Alameda Sol Nascente, 10 · Mairiporã
+        </p>
+
+        <!-- CONTADOR -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto mb-8">
+
+          <div class="bg-neutral-100 rounded-2xl p-4 sm:p-6">
+            <p id="dias" class="text-2xl sm:text-3xl font-semibold">0</p>
+            <p class="uppercase text-xs sm:text-sm mt-2">Dias</p>
+          </div>
+
+          <div class="bg-neutral-100 rounded-2xl p-4 sm:p-6">
+            <p id="horas" class="text-2xl sm:text-3xl font-semibold">0</p>
+            <p class="uppercase text-xs sm:text-sm mt-2">Horas</p>
+          </div>
+
+          <div class="bg-neutral-100 rounded-2xl p-4 sm:p-6">
+            <p id="minutos" class="text-2xl sm:text-3xl font-semibold">0</p>
+            <p class="uppercase text-xs sm:text-sm mt-2">Min</p>
+          </div>
+
+          <div class="bg-neutral-100 rounded-2xl p-4 sm:p-6">
+            <p id="segundos" class="text-2xl sm:text-3xl font-semibold">0</p>
+            <p class="uppercase text-xs sm:text-sm mt-2">Seg</p>
+          </div>
+
+        </div>
+
+        <!-- INFO EVENTO -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-neutral-50 rounded-3xl px-6 py-5 max-w-3xl mx-auto">
+
+          <div>
+            <p class="text-xs uppercase">Data</p>
+            <p class="font-medium">19/12/2026</p>
+          </div>
+
+          <div>
+            <p class="text-xs uppercase">Horário</p>
+            <p class="font-medium">16:00</p>
+          </div>
+
+          <div>
+            <p class="text-xs uppercase">Local</p>
+            <a
+              href="https://maps.app.goo.gl/n4UxF4D5MTXChnyx9"
+              target="_blank"
+              class="inline-block mt-2 text-xs bg-neutral-900 text-white px-4 py-2 rounded-full hover:bg-neutral-700 transition"
+            >
+              Como chegar
+            </a>
+          </div>
+
+        </div>
+
+      </section>
+
+    </section>
+
+    <!-- ABA PRESENTES -->
+<section id="presentes" class="tab hidden bg-[#f0e6da] rounded-3xl shadow p-6 sm:p-12 mb-20">
+
+  <!-- TÍTULO -->
+  <div class="mb-6 text-center">
+
+    <h2 class="text-3xl sm:text-4xl font-serif mb-4">
+      Lista de Presentes
+    </h2>
+
+    <button
+      onclick="abrirRanking()"
+      class="text-sm px-4 py-2 rounded-full border border-neutral-300 bg-white hover:bg-neutral-50 transition"
+    >
+      🏆 Ver ranking
+    </button>
+
+  </div>
+
+  <p class="text-center mb-12 max-w-2xl mx-auto text-sm sm:text-base">
+    Escolha um presente simbólico para nos ajudar a construir essa nova fase.
+  </p>
+
+  <!-- FILTROS -->
+  <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6"></div>
+    <div class="bg-neutral-50 border border-neutral-200 rounded-3xl p-4 sm:p-6 mb-10">
+
+    <!-- GRID -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+
+      <!-- PREÇO -->
+      <div>
+        <label class="text-xs uppercase tracking-widest text-neutral-500">
+          <b>Faixa de preço</b>
+        </label>
+
+        <select id="filtrovalor" class="select-premium">
+          <option value="all">Todos</option>
+          <option value="48">A partir de R$48</option>
+          <option value="100">A partir de R$100</option>
+          <option value="500">A partir de R$500</option>
+          <option value="800">A partir de R$800</option>
+          <option value="1000">A partir de R$1000</option>
+          <option value="2000">A partir de R$2000</option>
+          <option value="3000">A partir de R$3000</option>
+          <option value="3400">A partir de R$3400</option>
+        </select>
+      </div>
+
+      <!-- ORDENAÇÃO -->
+      <div>
+        <label class="text-xs uppercase tracking-widest text-neutral-500">
+          <b>Ordenação</b>
+        </label>
+
+        <select id="filtroEspecial" class="select-premium">
+          <option value="all">Todos</option>
+          <option value="mais-barato">Menor preço</option>
+          <option value="mais-caro">Maior preço</option>
+        </select>
+      </div>
+
+      <!-- CATEGORIA -->
+      <div>
+        <label class="text-xs uppercase tracking-widest text-neutral-500">
+          <b>Categoria</b>
+        </label>
+
+        <select id="filtroCategoria" class="select-premium">
+          <option value="all">Todas</option>
+          <option value="casa">Casa</option>
+          <option value="cozinha">Cozinha</option>
+          <option value="eletrodomesticos">Eletrodomésticos</option>
+          <option value="eletronicos">Eletrônicos</option>
+          <option value="lavanderia">Lavanderia</option>
+          <option value="moveis">Móveis</option>
+          <option value="quarto">Quarto</option>
+          <option value="outros">Outros</option>
+        </select>
+      </div>
+
+      <!-- BUSCA -->
+      <div>
+        <label class="text-xs uppercase tracking-widest text-neutral-500">
+          <b>Buscar</b>
+        </label>
+
+        <input
+          id="filtroBusca"
+          placeholder="Ex: jantar, spa, geladeira..."
+          class="filtros-buscar input-premium"
+        />
+      </div>
+
+    </div>
+
+    <!-- RODAPÉ DOS FILTROS -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
+
+      <!-- CONTADOR -->
+      <p id="contadorPresentes" class="text-sm text-neutral-600"></p>
+
+      <!-- DIREITA -->
+      <div class="flex items-center gap-3">
+        <!-- LIMPAR -->
+        <button
+          id="btnLimparFiltros"
+          class="text-sm underline hover:opacity-70 transition"
+        >
+          Limpar filtros
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- LISTA -->
+  <div
+    id="lista-presentes"
+    class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-10"
+  ></div>
+
+</section>
+
+<!-- MODAL PIX / CRÉDITO -->
+  <div id="modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full text-center shadow-2xl relative">
+
+      <button onclick="fecharModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 transition flex items-center justify-center">✕</button>
+
+      <h3 id="modalTitulo" class="text-2xl font-semibold mb-2"></h3>
+      <p id="modalValor" class="text-neutral-600 mb-6"></p>
+
+      <div class="flex bg-neutral-100 rounded-2xl p-1 mb-6">
+        <button id="btnTabPix"
+          class="flex-1 py-2 rounded-2xl text-sm font-semibold transition bg-white shadow"
+          onclick="trocarMetodoPagamento('pix')">PIX</button>
+
+        <button id="btnTabCredito"
+          class="flex-1 py-2 rounded-2xl text-sm font-semibold transition text-neutral-600 hover:text-neutral-900"
+          onclick="trocarMetodoPagamento('credito')">CRÉDITO</button>
+      </div>
+
+      <div id="areaPix">
+        <canvas id="qrcode" class="mx-auto mb-4"></canvas>
+        <div class="bg-neutral-100 rounded-2xl p-3 text-sm break-all text-neutral-700" id="pixCopia"></div>
+
+        <button onclick="copiarPix()"
+          class="mt-4 w-full bg-neutral-900 text-white py-3 rounded-2xl hover:bg-neutral-800 transition font-semibold">Copiar código PIX</button>
+
+        <p class="text-xs text-neutral-500 mt-4">Escaneie o QR Code ou copie o código.</p>
+      </div>
+
+      <div id="areaCredito" class="hidden">
+        <div class="bg-[#fbf7f2] border border-[#e9dfd4] rounded-2xl p-5 text-left mb-6">
+          <p class="text-sm text-neutral-700 font-semibold mb-1">Pagamento com cartão</p>
+          <p class="text-sm text-neutral-600">Você será direcionado para uma página segura.</p>
+        </div>
+
+        <a id="btnlinkpgm"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="w-full inline-block bg-[#c9b79c] text-white text-center py-3 rounded-2xl hover:opacity-90 transition font-semibold">Acessar link para pagamento</a>
+
+        <p class="text-xs text-neutral-500 mt-4">Uma nova aba será aberta.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL RANKING -->
+  <div id="modalRanking" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full relative">
+
+      <button onclick="fecharRanking()"
+        class="absolute top-4 right-4 text-neutral-500 hover:text-neutral-800">✕</button>
+
+      <h3 class="text-2xl font-serif mb-2 text-center">Ranking de Presentes</h3>
+
+      <p class="text-sm text-neutral-500 text-center mb-6">
+        Presentes de maior valor já recebidos 💚
+      </p>
+
+      <div id="listaRanking"
+        class="max-h-[360px] overflow-y-auto space-y-3 pr-2"></div>
+
+      <button onclick="fecharRanking()"
+        class="mt-6 w-full bg-neutral-900 text-white py-2 rounded-lg">Fechar</button>
+    </div>
+  </div>
+  </main>
+
+  <!-- SCRIPT PRINCIPAL -->
+  <script src="./app_git.js"></script>
+
+</body>
+</html>
