@@ -87,7 +87,7 @@
 <body class="bg-[#f7f5f2] text-neutral-800 overflow-hidden">
   <!-- INTRO ENVELOPE LUXO -->
   <div id="intro" class="fixed inset-0 bg-[#f7f5f2] flex flex-col sm:flex-col items-center justify-center z-[999] overflow-hidden gap-4">
-    <div id="envelope" class="relative w-[320px] h-[220px] sm:w-[420px] sm:h-[280px] perspective"  >
+    <div id="envelope" class="relative w-[320px] h-[220px] sm:w-[500px] sm:h-[400px] perspective"  >
       <!-- Base -->
       <div class="absolute inset-0 bg-[#f1e8dc] rounded-2xl shadow-2xl border border-[#e3d6c5]">
       </div>
@@ -95,12 +95,15 @@
       <div class="absolute inset-3 bg-[radial-gradient(circle,#d6c7b2_1px,transparent_1px)] bg-[size:12px_12px] rounded-xl">
       </div>
       <!-- Carta -->
-      <div id="carta" class="absolute inset-4 bg-white rounded-xl shadow-lg p-8 text-center translate-y-24 scale-95 opacity-0 transition-all duration-1000 ease-out z-10">
+      <div id="carta" class="absolute inset-4 bg-white rounded-xl shadow-lg p-8
+         flex flex-col items-center justify-center text-center
+         translate-y-24 scale-95 opacity-0
+         transition-all duration-1000 ease-out z-10">
         <h2 class="text-3xl monsieur-la-doulaise-regular mb-2">
           Amanda & Allan
         </h2>
         <p class="text-sm text-neutral-600 mb-4">
-          Você faz parte desse momento
+          Parece que você recebeu um convite especial...
         </p>
         <button onclick="entrarNoSite()" class="px-6 py-2 bg-neutral-900 text-white rounded-full text-sm hover:scale-105 transition">
         Entrar ✨
