@@ -13,107 +13,107 @@ const dataCasamento = new Date('2026-12-19T16:00:00');
 // =======================
 // const BASE_PATH = "./"; Não usado mais.
 const presentes = [
-  { id: 1,  nome: 'Jogo de Panelas', valor: 260, imagem: './1.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 2,  nome: 'Lava e Seca', valor: 3060, imagem: './2.png', categoria: 'eletrodomesticos', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 3,  nome: 'Aspirador', valor: 170, imagem: './3.png', categoria: 'eletrodomesticos', linkpgm: '',pago: false, pagoPor: ''},
-  { id: 4,  nome: 'Cesto Roupa Bambu', valor: 94, imagem: './4.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 5,  nome: 'Geladeira', valor: 3400, imagem: './5.png', categoria: 'eletrodomesticos', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 6,  nome: 'Micro-ondas', valor: 570, imagem: './6.png', categoria: 'eletrodomesticos', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 7,  nome: 'Fogão', valor: 1350, imagem: './7.png', categoria: 'eletrodomesticos', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 8,  nome: 'Liquidificador', valor: 170, imagem: './8.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 9,  nome: 'Jogo de Jantar', valor: 320, imagem: './9.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 10, nome: 'Cafeteira Espresso', valor: 399, imagem: './10.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 11, nome: 'Faqueiro', valor: 93, imagem: './11.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 12, nome: 'Sanduicheira', valor: 260, imagem: './12.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 13, nome: 'Jogo de Facas', valor: 120, imagem: './13.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 14, nome: 'Pipoqueira Elétrica', valor: 160, imagem: './14.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 15, nome: 'Jogo de copos', valor: 139, imagem: './15.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 16, nome: 'Ferro a Vapor', valor: 256, imagem: './16.png', categoria: 'eletrodomesticos', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 17, nome: 'Smart TV Philips 58"', valor: 2564, imagem: './17.png', categoria: 'eletronicos', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 18, nome: 'Armário de Cozinha Compacta', valor: 598, imagem: './18.png', categoria: 'moveis', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 19, nome: 'Rack + Painel para TV', valor: 500, imagem: './19.png', categoria: 'moveis', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 20, nome: 'Robô Aspirador', valor: 288, imagem: './20.png', categoria: 'eletrodomesticos', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 21, nome: 'Air Fryer', valor: 399, imagem: './21.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 22, nome: 'Depurador/Exaustor', valor: 512, imagem: './22.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 23, nome: 'Cama Box Casal', valor: 949, imagem: './23.png', categoria: 'quarto', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 24, nome: 'Guarda-roupa Casal', valor: 1269, imagem: './24.png', categoria: 'moveis', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 25, nome: 'Jogo de Cama Queen', valor: 158, imagem: './25.png', categoria: 'quarto', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 26, nome: 'Jogo de Toalhas', valor: 185, imagem: './26.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 27, nome: 'Kit Travesseiros ', valor: 177, imagem: './27.png', categoria: 'quarto', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 28, nome: 'Kit Potes Herméticos', valor: 176, imagem: './28.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 29, nome: 'Sofá com USB', valor: 1433, imagem: './29.png', categoria: 'moveis', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 30, nome: 'Batedeira Portátil', valor: 113, imagem: './30.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 31, nome: 'Ventilador de Mesa', valor: 124, imagem: './31.png', categoria: 'eletrodomesticos', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 32, nome: 'Kit Churrasco', valor: 169, imagem: './32.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 33, nome: 'Tábua de Passar', valor: 129, imagem: './33.png', categoria: 'lavanderia', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 34, nome: 'Kit Potes de Vidro', valor: 125, imagem: './34.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 35, nome: 'Kit Sobremesa', valor: 159, imagem: './35.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 36, nome: 'Kit Pratos Sobremesa', valor: 271, imagem: './36.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 37, nome: 'Garrafa Térmica Inox', valor: 110, imagem: './37.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 38, nome: 'Kit Organizadores Geladeira', valor: 189, imagem: './38.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 39, nome: 'Kit Utensílios Silicone', valor: 128, imagem: './39.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 40, nome: 'Echo Dot  - Alexia', valor: 568, imagem: './40.png', categoria: 'eletronicos', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 41, nome: 'Cabeceira Casal/Queen', valor: 440, imagem: './41.png', categoria: 'moveis', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 42, nome: 'Espelho Orgânico Grande', valor: 98, imagem: './42.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 43, nome: 'Suporte para Especiarias', valor: 199, imagem: './43.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 44, nome: 'Quadros Decorativos', valor: 129, imagem: './44.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 45, nome: 'Tapete Felpudo', valor: 99, imagem: './45.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 46, nome: 'Kit Capas de Almofadas', valor: 68, imagem: './46.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 47, nome: 'Cortina Blackout', valor: 134, imagem: './47.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 48, nome: 'Jogo Tapete Cozinha', valor: 142, imagem: './48.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 49, nome: 'Tapete Banho', valor: 142, imagem: './49.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 50, nome: 'Multiprocessador Elétrico', valor: 119, imagem: './50.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 51, nome: 'Espremedor de Frutas', valor: 93, imagem: './51.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 52, nome: 'Kit Porta-retratos', valor: 120, imagem: './52.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 53, nome: 'Aparador Bar com Adega', valor: 294, imagem: './53.png', categoria: 'moveis', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 54, nome: 'Kit Petisqueiras', valor: 132, imagem: './54.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 55, nome: 'Colcha Casal', valor: 105, imagem: './55.png', categoria: 'quarto', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 56, nome: 'Arara Dupla Closet', valor: 120, imagem: './56.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 57, nome: 'Luminária de Mesa Articulável', valor: 92, imagem: './57.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 58, nome: 'Mesa de Jantar Oval', valor: 577, imagem: './58.png', categoria: 'moveis', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 59, nome: 'Panela de Arroz Elétrica', valor: 130, imagem: './59.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 60, nome: 'Kit Travessas LE CHEF', valor: 75, imagem: './60.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 61, nome: 'Kit Tigelas', valor: 115, imagem: './61.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 62, nome: 'Kit Banheiro', valor: 140, imagem: './62.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 63, nome: 'Kit Travessas Ferro Fundido', valor: 173, imagem: './63.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 64, nome: 'Bandeja de Café com Alças', valor: 126, imagem: './64.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 65, nome: 'Kit Taças Vinho', valor: 126, imagem: './65.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 66, nome: 'Boleira Bambu', valor: 110, imagem: './66.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 67, nome: 'Mesa de Centro Oval', valor: 228, imagem: './67.png', categoria: 'moveis', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 68, nome: 'Porta-temperos Giratório 20 Potes', valor: 119, imagem: './68.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 69, nome: 'Jarra + copos', valor: 107, imagem: './69.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 70, nome: 'Jogo Formas Retangulares', valor: 105, imagem: './70.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 71, nome: 'Kit Formas Redondas', valor: 94, imagem: './71.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 72, nome: 'Kit Vasos para Planta', valor: 148, imagem: './72.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 73, nome: 'Cortina Cozinha', valor: 60, imagem: './73.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 74, nome: 'Jogo Americano', valor: 73, imagem: './74.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 75, nome: 'Suporte Papel Toalha', valor: 100, imagem: './75.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 76, nome: 'Escorredor Suspenso', valor: 130, imagem: './76.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  //repetido. { id:  77, nome: 'Kit Utensílios 7 Peças', valor: 55, imagem: './77.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 78, nome: 'Kit Dispenser', valor: 74, imagem: './78.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 79, nome: 'Lixeira Inox', valor: 100, imagem: './79.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 80, nome: 'Kit Toalhas de Mesa', valor: 113, imagem: './80.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 81, nome: 'Protetor de Sofá', valor: 145, imagem: './81.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 82, nome: 'Manta para Sofá', valor: 48, imagem: './82.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  //repetido. { id: 83, nome: 'Capa Protetora Sofá', valor: 152, imagem: './83.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 84, nome: 'Edredom Queen', valor: 233, imagem: './84.png', categoria: 'quarto', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 85, nome: 'Varal de Chão', valor: 89, imagem: './85.png', categoria: 'lavanderia', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 86, nome: 'Jogo Xícaras', valor: 189, imagem: './86.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 87, nome: 'Ar-condicionado', valor: 3199, imagem: './87.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 88, nome: 'Whisky Royal Salute 21 anos', valor: 899, imagem: './88.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 89, nome: 'Kit Canecas', valor: 113, imagem: './89.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 90, nome: 'Kit Canecas Vidro', valor: 193, imagem: './90.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 91, nome: 'Purificador de Água', valor: 499, imagem: './91.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  //repetido. { id: 92, nome: 'Jogo de Cama Queen', valor: 279, imagem: './92.png', categoria: 'quarto', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 93, nome: 'Soundbar / Home Theater', valor: 369, imagem: './93.png', categoria: 'casa', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 94, nome: 'Panela de Pressão', valor: 220, imagem: './94.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 95, nome: 'Kit Potes com Trava', valor: 160, imagem: './95.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 96, nome: 'Kit Limpeza', valor: 114, imagem: './96.png', categoria: 'limpeza', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 97, nome: 'Mesa Bistrô + Banquetas', valor: 754, imagem: './97.png', categoria: 'cozinha', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 98, nome: 'Vale ingresso de show', valor: 300, imagem: './98.png', categoria: 'outros', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 99, nome: 'Vale restaurante romântico', valor: 250, imagem: './99.png', categoria: 'outros', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 100, nome: 'Vale dia de Spar casal', valor: 350, imagem: './100.png', categoria: 'outros', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 101, nome: 'Vale passagem aérea', valor: 200, imagem: './101.png', categoria: 'outros', linkpgm: '', pago: false, pagoPor: ''},
+  { id: 1,  nome: 'Jogo de Panelas', valor: 260, imagem: '/img/presentes/1.png', categoria: 'cozinha', linkpgm: '#',pago: false, pagoPor: ''},
+  { id: 2,  nome: 'Lava e Seca', valor: 3060, imagem: '/img/presentes/2.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 3,  nome: 'Aspirador', valor: 170, imagem: '/img/presentes/3.png', categoria: 'eletrodomesticos', linkpgm: '#',pago: false, pagoPor: ''},
+  { id: 4,  nome: 'Cesto Roupa Bambu', valor: 94, imagem: '/img/presentes/4.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 5,  nome: 'Geladeira', valor: 3400, imagem: '/img/presentes/5.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 6,  nome: 'Micro-ondas', valor: 570, imagem: '/img/presentes/6.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 7,  nome: 'Fogão', valor: 1350, imagem: '/img/presentes/7.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 8,  nome: 'Liquidificador', valor: 170, imagem: '/img/presentes/8.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 9,  nome: 'Jogo de Jantar', valor: 320, imagem: '/img/presentes/9.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 10, nome: 'Cafeteira Espresso', valor: 399, imagem: '/img/presentes/10.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 11, nome: 'Faqueiro', valor: 93, imagem: '/img/presentes/11.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 12, nome: 'Sanduicheira', valor: 260, imagem: '/img/presentes/12.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 13, nome: 'Jogo de Facas', valor: 120, imagem: '/img/presentes/13.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 14, nome: 'Pipoqueira Elétrica', valor: 160, imagem: '/img/presentes/14.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 15, nome: 'Jogo de copos', valor: 139, imagem: '/img/presentes/15.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 16, nome: 'Ferro a Vapor', valor: 256, imagem: '/img/presentes/16.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 17, nome: 'Smart TV Philips 58"', valor: 2564, imagem: '/img/presentes/17.png', categoria: 'eletronicos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 18, nome: 'Armário de Cozinha Compacta', valor: 598, imagem: '/img/presentes/18.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 19, nome: 'Rack + Painel para TV', valor: 500, imagem: '/img/presentes/19.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 20, nome: 'Robô Aspirador', valor: 288, imagem: '/img/presentes/20.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 21, nome: 'Air Fryer', valor: 399, imagem: '/img/presentes/21.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 22, nome: 'Depurador/Exaustor', valor: 512, imagem: '/img/presentes/22.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 23, nome: 'Cama Box Casal', valor: 949, imagem: '/img/presentes/23.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 24, nome: 'Guarda-roupa Casal', valor: 1269, imagem: '/img/presentes/24.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 25, nome: 'Jogo de Cama Queen', valor: 158, imagem: '/img/presentes/25.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 26, nome: 'Jogo de Toalhas', valor: 185, imagem: '/img/presentes/26.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 27, nome: 'Kit Travesseiros ', valor: 177, imagem: '/img/presentes/27.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 28, nome: 'Kit Potes Herméticos', valor: 176, imagem: '/img/presentes/28.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 29, nome: 'Sofá com USB', valor: 1433, imagem: '/img/presentes/29.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 30, nome: 'Batedeira Portátil', valor: 113, imagem: '/img/presentes/30.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 31, nome: 'Ventilador de Mesa', valor: 124, imagem: '/img/presentes/31.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 32, nome: 'Kit Churrasco', valor: 169, imagem: '/img/presentes/32.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 33, nome: 'Tábua de Passar', valor: 129, imagem: '/img/presentes/33.png', categoria: 'lavanderia', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 34, nome: 'Kit Potes de Vidro', valor: 125, imagem: '/img/presentes/34.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 35, nome: 'Kit Sobremesa', valor: 159, imagem: '/img/presentes/35.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 36, nome: 'Kit Pratos Sobremesa', valor: 271, imagem: '/img/presentes/36.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 37, nome: 'Garrafa Térmica Inox', valor: 110, imagem: '/img/presentes/37.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 38, nome: 'Kit Organizadores Geladeira', valor: 189, imagem: '/img/presentes/38.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 39, nome: 'Kit Utensílios Silicone', valor: 128, imagem: '/img/presentes/39.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 40, nome: 'Echo Dot  - Alexia', valor: 568, imagem: '/img/presentes/40.png', categoria: 'eletronicos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 41, nome: 'Cabeceira Casal/Queen', valor: 440, imagem: '/img/presentes/41.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 42, nome: 'Espelho Orgânico Grande', valor: 98, imagem: '/img/presentes/42.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 43, nome: 'Suporte para Especiarias', valor: 199, imagem: '/img/presentes/43.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 44, nome: 'Quadros Decorativos', valor: 129, imagem: '/img/presentes/44.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 45, nome: 'Tapete Felpudo', valor: 99, imagem: '/img/presentes/45.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 46, nome: 'Kit Capas de Almofadas', valor: 68, imagem: '/img/presentes/46.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 47, nome: 'Cortina Blackout', valor: 134, imagem: '/img/presentes/47.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 48, nome: 'Jogo Tapete Cozinha', valor: 142, imagem: '/img/presentes/48.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 49, nome: 'Tapete Banho', valor: 142, imagem: '/img/presentes/49.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 50, nome: 'Multiprocessador Elétrico', valor: 119, imagem: '/img/presentes/50.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 51, nome: 'Espremedor de Frutas', valor: 93, imagem: '/img/presentes/51.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 52, nome: 'Kit Porta-retratos', valor: 120, imagem: '/img/presentes/52.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 53, nome: 'Aparador Bar com Adega', valor: 294, imagem: '/img/presentes/53.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 54, nome: 'Kit Petisqueiras', valor: 132, imagem: '/img/presentes/54.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 55, nome: 'Colcha Casal', valor: 105, imagem: '/img/presentes/55.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 56, nome: 'Arara Dupla Closet', valor: 120, imagem: '/img/presentes/56.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 57, nome: 'Luminária de Mesa Articulável', valor: 92, imagem: '/img/presentes/57.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 58, nome: 'Mesa de Jantar Oval', valor: 577, imagem: '/img/presentes/58.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 59, nome: 'Panela de Arroz Elétrica', valor: 130, imagem: '/img/presentes/59.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 60, nome: 'Kit Travessas LE CHEF', valor: 75, imagem: '/img/presentes/60.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 61, nome: 'Kit Tigelas', valor: 115, imagem: '/img/presentes/61.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 62, nome: 'Kit Banheiro', valor: 140, imagem: '/img/presentes/62.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 63, nome: 'Kit Travessas Ferro Fundido', valor: 173, imagem: '/img/presentes/63.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 64, nome: 'Bandeja de Café com Alças', valor: 126, imagem: '/img/presentes/64.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 65, nome: 'Kit Taças Vinho', valor: 126, imagem: '/img/presentes/65.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 66, nome: 'Boleira Bambu', valor: 110, imagem: '/img/presentes/66.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 67, nome: 'Mesa de Centro Oval', valor: 228, imagem: '/img/presentes/67.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 68, nome: 'Porta-temperos Giratório 20 Potes', valor: 119, imagem: '/img/presentes/68.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 69, nome: 'Jarra + copos', valor: 107, imagem: '/img/presentes/69.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 70, nome: 'Jogo Formas Retangulares', valor: 105, imagem: '/img/presentes/70.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 71, nome: 'Kit Formas Redondas', valor: 94, imagem: '/img/presentes/71.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 72, nome: 'Kit Vasos para Planta', valor: 148, imagem: '/img/presentes/72.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 73, nome: 'Cortina Cozinha', valor: 60, imagem: '/img/presentes/73.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 74, nome: 'Jogo Americano', valor: 73, imagem: '/img/presentes/74.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 75, nome: 'Suporte Papel Toalha', valor: 100, imagem: '/img/presentes/75.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 76, nome: 'Escorredor Suspenso', valor: 130, imagem: '/img/presentes/76.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  //repetido. { id:  77, nome: 'Kit Utensílios 7 Peças', valor: 55, imagem: '/img/presentes/77.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 78, nome: 'Kit Dispenser', valor: 74, imagem: '/img/presentes/78.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 79, nome: 'Lixeira Inox', valor: 100, imagem: '/img/presentes/79.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 80, nome: 'Kit Toalhas de Mesa', valor: 113, imagem: '/img/presentes/80.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 81, nome: 'Protetor de Sofá', valor: 145, imagem: '/img/presentes/81.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 82, nome: 'Manta para Sofá', valor: 48, imagem: '/img/presentes/82.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  //repetido. { id: 83, nome: 'Capa Protetora Sofá', valor: 152, imagem: '/img/presentes/83.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 84, nome: 'Edredom Queen', valor: 233, imagem: '/img/presentes/84.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 85, nome: 'Varal de Chão', valor: 89, imagem: '/img/presentes/85.png', categoria: 'lavanderia', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 86, nome: 'Jogo Xícaras', valor: 189, imagem: '/img/presentes/86.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 87, nome: 'Ar-condicionado', valor: 3199, imagem: '/img/presentes/87.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 88, nome: 'Whisky Royal Salute 21 anos', valor: 899, imagem: '/img/presentes/88.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 89, nome: 'Kit Canecas', valor: 113, imagem: '/img/presentes/89.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 90, nome: 'Kit Canecas Vidro', valor: 193, imagem: '/img/presentes/90.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 91, nome: 'Purificador de Água', valor: 499, imagem: '/img/presentes/91.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  //repetido. { id: 92, nome: 'Jogo de Cama Queen', valor: 279, imagem: '/img/presentes/92.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 93, nome: 'Soundbar / Home Theater', valor: 369, imagem: '/img/presentes/93.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 94, nome: 'Panela de Pressão', valor: 220, imagem: '/img/presentes/94.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 95, nome: 'Kit Potes com Trava', valor: 160, imagem: '/img/presentes/95.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 96, nome: 'Kit Limpeza', valor: 114, imagem: '/img/presentes/96.png', categoria: 'limpeza', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 97, nome: 'Mesa Bistrô + Banquetas', valor: 754, imagem: '/img/presentes/97.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 98, nome: 'Vale ingresso de show', valor: 300, imagem: '/img/presentes/98.png', categoria: 'outros', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 99, nome: 'Vale restaurante romântico', valor: 250, imagem: '/img/presentes/99.png', categoria: 'outros', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 100, nome: 'Vale dia de Spar casal', valor: 350, imagem: '/img/presentes/100.png', categoria: 'outros', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 101, nome: 'Vale passagem aérea', valor: 200, imagem: '/img/presentes/101.png', categoria: 'outros', linkpgm: '#', pago: false, pagoPor: ''},
 ];
 
 
@@ -210,7 +210,7 @@ function renderPresentes() {
     const isPago = p.pago === true; // marca presente como pago
     const card = document.createElement('div');
     card.className = `
-      group bg-white rounded-3xl shadow p-8 text-center transition-all duration-300
+      group bg-white rounded-xl shadow p-8 text-center transition-all duration-300
       ${isPago 
         ? 'opacity-60 cursor-not-allowed' 
         : 'cursor-pointer hover:-translate-y-2 hover:shadow-xl'}
@@ -254,6 +254,10 @@ function renderPresentes() {
 if (contador) {
     contador.innerText = `${filtrados.length}, presente(s) encontrado(s)`;
   }
+
+  setTimeout(() => {
+    ajustarTamanhoCards();
+  }, 50);
 }
 function ajustarImagensCards() {
   const imgs = document.querySelectorAll('#lista-presentes img[data-fit="auto"]');
@@ -593,6 +597,39 @@ function renderRanking() {
   });
 }
 
+function ajustarTamanhoCards() {
+  const cards = document.querySelectorAll('#lista-presentes > div');
+
+  let largura = 100;
+
+  if (window.innerWidth >= 1024) {
+    largura = 33.333; // desktop = 3
+  } 
+  else if (window.innerWidth >= 640) {
+    largura = 50; // tablet = 2
+  }
+
+  cards.forEach(card => {
+    card.style.minWidth = largura + '%';
+    card.style.scrollSnapAlign = 'start';
+  });
+}
+function initCarousel() {
+  const container = document.getElementById('lista-presentes');
+  const prev = document.getElementById('btnPrev');
+  const next = document.getElementById('btnNext');
+
+  if (!container || !prev || !next) return;
+
+  next.addEventListener('click', () => {
+    container.scrollBy({ left: container.offsetWidth, behavior: 'smooth' });
+  });
+
+  prev.addEventListener('click', () => {
+    container.scrollBy({ left: -container.offsetWidth, behavior: 'smooth' });
+  });
+}
+
 
 // =======================
 // INIT
@@ -612,4 +649,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // ✅ filtros + render
   initFiltrosPresentes();
   renderPresentes();
+  initCarousel();
+  
+  setTimeout(() => {
+    ajustarTamanhoCards();
+  }, 200);
+
+  window.addEventListener('resize', ajustarTamanhoCards);
 });
