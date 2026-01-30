@@ -1,8 +1,9 @@
-<!-- --------------------GITHUB V2-------------------->
+<!-- --------------------GIT V2-------------------->
 
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Amanda & Allan | Nosso Casamento</title>
@@ -17,7 +18,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mea+Culpa&family=Monsieur+La+Doulaise&family=Sacramento&display=swap" rel="stylesheet">
 
   <!-- SCRIPT GLOBAL (showTab corrigido) -->
   <script>
@@ -46,11 +49,85 @@
         renderPresentes();
       }
     });
+
+    let aberto = false;
+
+    function abrirEnvelope() {
+
+    if (aberto) return;
+    aberto = true;
+
+    const aba = document.getElementById("aba");
+    const selo = document.getElementById("selo");
+    const carta = document.getElementById("carta");
+
+    // Some selo
+    selo.classList.add("opacity-0", "scale-0");
+
+    // Abre aba
+    aba.style.transform = "rotateX(180deg)";
+
+    // Carta começa a sair
+    setTimeout(() => {
+      carta.classList.add("papel-saindo");
+      carta.classList.remove("translate-y-24", "scale-95", "opacity-0");
+    }, 500);
+  }
+    function entrarNoSite() {
+      const intro = document.getElementById("intro");
+      intro.classList.add("opacity-0");
+      setTimeout(() => {
+        intro.style.display = "none";
+        document.body.classList.remove("overflow-hidden");
+      }, 700);
+    }
   </script>
 </head>
 
-<body class="bg-[#f7f5f2] text-neutral-800" >
-
+<body class="bg-[#f7f5f2] text-neutral-800 overflow-hidden">
+  <!-- INTRO ENVELOPE LUXO -->
+  <div id="intro" class="fixed inset-0 bg-[#f7f5f2] flex flex-col sm:flex-col items-center justify-center z-[999] overflow-hidden gap-4">
+    <div id="envelope" class="relative w-[320px] h-[220px] sm:w-[420px] sm:h-[280px] perspective"  >
+      <!-- Base -->
+      <div class="absolute inset-0 bg-[#f1e8dc] rounded-2xl shadow-2xl border border-[#e3d6c5]">
+      </div>
+      <!-- Liner interno -->
+      <div class="absolute inset-3 bg-[radial-gradient(circle,#d6c7b2_1px,transparent_1px)] bg-[size:12px_12px] rounded-xl">
+      </div>
+      <!-- Carta -->
+      <div id="carta" class="absolute inset-4 bg-white rounded-xl shadow-lg p-8 text-center translate-y-24 scale-95 opacity-0 transition-all duration-1000 ease-out z-10">
+        <h2 class="text-3xl monsieur-la-doulaise-regular mb-2">
+          Amanda & Allan
+        </h2>
+        <p class="text-sm text-neutral-600 mb-4">
+          Você faz parte desse momento
+        </p>
+        <button onclick="entrarNoSite()" class="px-6 py-2 bg-neutral-900 text-white rounded-full text-sm hover:scale-105 transition">
+        Entrar ✨
+        </button>
+      </div>
+      <!-- Aba com recorte -->
+      <div
+        id="aba" class="absolute inset-x-0 top-0 h-1/2 bg-[#e4d6c3] origin-top transition-transform duration-700 rounded-t-2xl z-20 laser">
+      </div>
+      <!-- Selo -->
+      <div id="selo" onclick="abrirEnvelope()" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br
+              from-red-700 to-red-900 rounded-full shadow-xl flex items-center justify-center text-white font-bold cursor-pointer  animate-pulse z-30">
+        A & A
+      </div>
+    </div>
+    <!-- Aviso Mobile Fora -->
+    <div id="aviso-mobile" class="block sm:hidden mt-6 text-center px-4">
+      <div class="inline-block bg-white/90 backdrop-blur
+            border border-neutral-200
+            rounded-xl px-3 py-2
+            text-xs text-neutral-600 shadow-sm leading-snug"  >
+      📱 Para melhor experiência, ative<br>
+      <b>"Site para computador"</b>
+      </div>
+    </div>
+  </div>
+  
   <!-- NAV -->
   <nav class="bg-white shadow fixed w-full z-10">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
@@ -85,8 +162,7 @@
         <div class="absolute inset-0 flex flex-col items-center justify-end pb-20">
           <div class="text-center text-white max-w-3xl px-4">
 
-            <h1 class="text-4xl sm:text-6xl mb-8" style="font-family: 'Great Vibes', cursive;">
-Amanda & Allan</h1>
+            <h1 class="text-4xl sm:text-6xl mb-8 monsieur-la-doulaise-regular">Amanda & Allan</h1>
 
             <p class="text-sm sm:text-xl mb-8">
               Estamos muito felizes em dividir esse momento com você
@@ -171,7 +247,7 @@ Amanda & Allan</h1>
         </p>
 
         <!-- CONTADOR -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto mb-8">
+        <div class="grid grid-cols-4 sm:grid-cols-4 gap-4 max-w-3xl mx-auto mb-8">
 
           <div class="bg-neutral-100 rounded-2xl p-4 sm:p-6">
             <p id="dias" class="text-2xl sm:text-3xl font-semibold">0</p>
@@ -196,7 +272,7 @@ Amanda & Allan</h1>
         </div>
 
         <!-- INFO EVENTO -->
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 bg-neutral-50 rounded-3xl px-6 py-5 max-w-3xl mx-auto">
+        <div class="grid grid-cols-3 sm:grid-cols-3 gap-4 bg-neutral-50 rounded-3xl px-6 py-5 max-w-3xl mx-auto">
 
           <div>
             <p class="text-xs uppercase">Data</p>
@@ -239,7 +315,7 @@ Amanda & Allan</h1>
       onclick="abrirRanking()"
       class="text-sm px-4 py-2 rounded-full border border-neutral-300 bg-white hover:bg-neutral-50 transition"
     >
-      🏆 Ver ranking
+      🏆 Top apoadores
     </button>
 
   </div>
@@ -344,10 +420,26 @@ Amanda & Allan</h1>
   </div>
 
   <!-- LISTA -->
+<div class="relative">
+
+  <!-- BOTÕES -->
+  <button id="btnPrev"
+    class="absolute -left-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full w-10 h-10 z-10">
+    ‹
+  </button>
+
+  <button id="btnNext"
+    class="absolute -right-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full w-10 h-10 z-10">
+    ›
+  </button>
+
+  <!-- CARROSSEL -->
   <div
     id="lista-presentes"
-    class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-10"
+    class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4"
   ></div>
+
+</div>
 
 </section>
 
@@ -425,4 +517,3 @@ Amanda & Allan</h1>
 
 </body>
 </html>
-
