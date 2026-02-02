@@ -1,6 +1,4 @@
-// =======================
 // CONFIG PIX
-// =======================
 let presenteSelecionado = null;
 let metodoPagamento = "pix"; // default
 const pixKey = '48017327803'; // CPF
@@ -8,10 +6,16 @@ const recebedorPix = 'MATEUS DE NORONHA LEITE'; // nome do recebedor
 const cidadePix = 'SAO PAULO'; // cidade do recebedor
 const dataCasamento = new Date('2026-12-19T16:00:00');
 
-// =======================
+// NAV / UI
+function showTab(id) {
+  document.querySelectorAll('.tab').forEach(tab => tab.classList.add('hidden'));
+  const active = document.getElementById(id);
+  if (active) active.classList.remove('hidden');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // lISTA DE PRESENTES
-// =======================
-// const BASE_PATH = "./"; Não usado mais.
 const presentes = [
   { id: 1,  nome: 'Jogo de Panelas', valor: 260, imagem: './1.png', categoria: 'cozinha', linkpgm: '#',pago: false, pagoPor: ''},
   { id: 2,  nome: 'Lava e Seca', valor: 3060, imagem: './2.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
@@ -116,21 +120,7 @@ const presentes = [
   { id: 101, nome: 'Vale passagem aérea', valor: 200, imagem: './101.png', categoria: 'outros', linkpgm: '#', pago: false, pagoPor: ''},
 ];
 
-
-// =======================
-// NAV / UI
-// =======================
-function showTab(id) {
-  document.querySelectorAll('.tab').forEach(tab => tab.classList.add('hidden'));
-  const active = document.getElementById(id);
-  if (active) active.classList.remove('hidden');
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// =======================
-// FILTROS
-// =======================
+// FILTROS - LISTA DE PRESENTES
 let filtros = {
   valor: 'all',
   categoria: 'all',
@@ -149,7 +139,6 @@ function normalizarTexto(str) {
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '');
 }
-
 function aplicarFiltros(lista) {
   let filtrados = [...lista];
 
@@ -195,9 +184,7 @@ if (filtros.especial !== 'all') {
   return filtrados;
 }
 
-// =======================
 // PRESENTES (com filtros)
-// =======================
 function renderPresentes() {
   const lista = document.getElementById('lista-presentes');
   const contador = document.getElementById('contadorPresentes');
@@ -279,7 +266,6 @@ function ajustarImagensCards() {
     if (img.complete) img.onload();
   });
 }
-
 function initFiltrosPresentes() {
   const filtrovalor = document.getElementById('filtrovalor'); // campo valor
   const filtroEspecial = document.getElementById('filtroEspecial'); //mais caro / mais barato
@@ -318,9 +304,7 @@ function initFiltrosPresentes() {
   });
 }
 
-// =======================
 // COUNTDOWN
-// =======================
 function iniciarContagem() {
   function tick() {
     const diff = dataCasamento - new Date();
@@ -350,9 +334,7 @@ function iniciarContagem() {
   setInterval(tick, 1000);
 }
 
-// =======================
 // PIX (BR CODE OFICIAL)
-// =======================
 function gerarPixBRCode(valor) {
   // TLV helper
   function tlv(id, value) {
@@ -411,9 +393,7 @@ function gerarPixBRCode(valor) {
   return payloadSemCRC + crc;
 }
 
-// =======================
 // MODAL PIX
-// =======================
 function abrirModal(index) {
   const p = presentes[index];
   presenteSelecionado = p;
@@ -457,12 +437,60 @@ function fecharModal() {
   modal.classList.remove('flex');
 }
 
+//Copiar código PIX
 function copiarPix() {
-  navigator.clipboard.writeText(document.getElementById('pixCopia').innerText);
-  alert('Pix copiado');
+  const pixEl = document.getElementById('pixCopia');
+  const btn = document.getElementById('btnCopiarPix');
+
+  if (!pixEl || !btn) return;
+
+  const pix = pixEl.innerText.trim();
+
+  navigator.clipboard.writeText(pix).then(() => {
+
+    const textoOriginal = btn.innerText;
+
+    // Remove TODAS as cores possíveis antes
+    btn.classList.remove(
+      'bg-neutral-900',
+      'hover:bg-neutral-800',
+      'active:bg-neutral-900',
+      'focus:bg-neutral-900'
+    );
+
+    // Força verde
+    btn.classList.add('bg-green-600');
+
+    // Força inline (mobile respeita sempre)
+    btn.style.backgroundColor = '#16a34a';
+
+    btn.innerText = '✔️ PIX copiado';
+    btn.disabled = true;
+
+    if (navigator.vibrate) {
+      navigator.vibrate(80);
+    }
+
+    setTimeout(() => {
+
+      if (!document.body.contains(btn)) return;
+
+      btn.innerText = textoOriginal;
+
+      btn.classList.remove('bg-green-600');
+      btn.classList.add('bg-neutral-900');
+
+      // Remove força inline
+      btn.style.backgroundColor = '';
+
+      btn.disabled = false;
+
+    }, 3000);
+
+  });
 }
 
-// Fecha modal ao clicar fora
+// Fecha modal PIX ao clicar fora
 function initModalClose() {
   const modal = document.getElementById('modal');
   if (!modal) return;
@@ -471,6 +499,8 @@ function initModalClose() {
     if (e.target.id === 'modal') fecharModal();
   });
 }
+
+//pix ou crédito
 function trocarMetodoPagamento(metodo) {
   metodoPagamento = metodo;
 
@@ -501,63 +531,13 @@ function trocarMetodoPagamento(metodo) {
   }
 }
 
-// =======================
-// TOOLTIP (mobile touch)
-// =======================
-function toggleTooltip() {
-  const tooltip = document.getElementById('tooltipPix');
-  const isVisible = tooltip.classList.contains('opacity-100');
-
-  tooltip.classList.toggle('opacity-100', !isVisible);
-  tooltip.classList.toggle('pointer-events-auto', !isVisible);
-  tooltip.classList.toggle('pointer-events-none', isVisible);
-}
-
-function initTooltipDesktopHover() {
-  const tooltipBtn = document.querySelector('button[aria-controls="tooltipPix"]');
-  if (!tooltipBtn) return;
-
-  tooltipBtn.addEventListener('mouseenter', () => {
-    if (window.innerWidth >= 768) {
-      const tooltip = document.getElementById('tooltipPix');
-      tooltip.classList.add('opacity-100');
-      tooltip.classList.remove('pointer-events-none');
-      tooltip.classList.add('pointer-events-auto');
-    }
-  });
-
-  tooltipBtn.addEventListener('mouseleave', () => {
-    if (window.innerWidth >= 768) {
-      const tooltip = document.getElementById('tooltipPix');
-      tooltip.classList.remove('opacity-100', 'pointer-events-auto');
-      tooltip.classList.add('pointer-events-none');
-    }
-  });
-
-  document.addEventListener('click', (e) => {
-    const tooltip = document.getElementById('tooltipPix');
-    const btn = e.target.closest('button[aria-controls="tooltipPix"]');
-
-    if (!tooltip) return;
-    if (btn) return;
-
-    if (!e.target.closest('#tooltipPix')) {
-      tooltip.classList.remove('opacity-100', 'pointer-events-auto');
-      tooltip.classList.add('pointer-events-none');
-    }
-  });
-}
-
-//=======================
-//RAKING
-//======================
+//Top apoadores
 function abrirRanking() {
   renderRanking();
   const modal = document.getElementById('modalRanking');
   modal.classList.remove('hidden');
   modal.classList.add('flex');
 }
-
 function fecharRanking() {
   const modal = document.getElementById('modalRanking');
   modal.classList.add('hidden');
@@ -575,7 +555,7 @@ function renderRanking() {
   if (pagos.length === 0) {
     lista.innerHTML = `
       <li class="text-center text-neutral-500">
-        Nenhum presente recebido ainda
+        Seja o primeiro a presentear! 🎉
       </li>
     `;
     return;
@@ -614,26 +594,88 @@ function ajustarTamanhoCards() {
     card.style.scrollSnapAlign = 'start';
   });
 }
-function initCarousel() {
-  const container = document.getElementById('lista-presentes');
-  const prev = document.getElementById('btnPrev');
-  const next = document.getElementById('btnNext');
 
-  if (!container || !prev || !next) return;
+// TIMELINE CARROSSEL
+const slides = document.querySelectorAll('.fade-slide');
+const next = document.getElementById('next');
+const prev = document.getElementById('prev');
 
-  next.addEventListener('click', () => {
-    container.scrollBy({ left: container.offsetWidth, behavior: 'smooth' });
-  });
+let index = 0;
+let autoPlayInterval;
+let startX = 0;
+let endX = 0;
 
-  prev.addEventListener('click', () => {
-    container.scrollBy({ left: -container.offsetWidth, behavior: 'smooth' });
+function showSlide(i) {
+  slides.forEach((slide, idx) => {
+    slide.classList.toggle('active', idx === i);
   });
 }
 
+function nextSlide() {
+  index = (index + 1) % slides.length;
+  showSlide(index);
+}
 
-// =======================
-// INIT
-// =======================
+function prevSlide() {
+  index = (index - 1 + slides.length) % slides.length;
+  showSlide(index);
+}
+
+// Botões
+next.addEventListener('click', () => {
+  nextSlide();
+  restartAutoPlay();
+});
+
+prev.addEventListener('click', () => {
+  prevSlide();
+  restartAutoPlay();
+});
+
+// Auto-play
+function startAutoPlay() {
+  autoPlayInterval = setInterval(() => {
+    nextSlide();
+  }, 4500);
+}
+
+function restartAutoPlay() {
+  clearInterval(autoPlayInterval);
+  startAutoPlay();
+}
+
+startAutoPlay();
+
+// Swipe Mobile
+const carousel = document.getElementById('carousel');
+
+carousel.addEventListener('touchstart', (e) => {
+  startX = e.touches[0].clientX;
+});
+
+carousel.addEventListener('touchend', (e) => {
+  endX = e.changedTouches[0].clientX;
+  handleSwipe();
+});
+
+function handleSwipe() {
+  const diff = startX - endX;
+
+  if (Math.abs(diff) > 50) {
+    if (diff > 0) {
+      nextSlide();
+    } else {
+      prevSlide();
+    }
+    restartAutoPlay();
+  }
+}
+
+// Inicializa
+showSlide(index);
+
+
+// Não colocar nada abaixo daqui
 document.addEventListener('DOMContentLoaded', () => {
   // FIX do botão Presentes (tinha classe bugada no HTML)
   const btns = document.querySelectorAll('nav button');
