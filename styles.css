@@ -182,3 +182,11 @@ button {
   transform: translateY(-0px) scale(0.99);
   opacity: 1;
 }
+
+/* Aba triangular do envelope */
+.envelope-flap {
+  clip-path: polygon(0 0, 50% 100%, 100% 0);
+  transform-origin: top center;
+  backface-visibility: hidden;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
