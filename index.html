@@ -1,4 +1,4 @@
-<!-- --------------------GIT V2-------------------->
+<!-- --------------------LOCAL V3-------------------->
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -39,48 +39,70 @@
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  function entrarNoSite() {
+    const intro = document.getElementById("intro");
+    const aviso = document.getElementById("aviso-mobile");
 
-    document.addEventListener('DOMContentLoaded', () => {
-      // Abre home por padrão
-      showTab('home');
+    // Some o aviso imediatamente
+    if (aviso) {
+      aviso.style.display = "none";
+    }
 
-      // Garante que presentes seja carregado
-      if (typeof renderPresentes === 'function') {
-        renderPresentes();
-      }
-    });
+    // Some o envelope
+    intro.classList.add("opacity-0");
 
-    let aberto = false;
+    setTimeout(() => {
+      intro.style.display = "none";
+      document.body.classList.remove("overflow-hidden");
+    }, 700);
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    // Abre home por padrão
+    showTab('home');
 
-    function abrirEnvelope() {
+    // Garante que presentes seja carregado
+    if (typeof renderPresentes === 'function') {
+      renderPresentes();
+    }
+  });
 
+  let aberto = false;
+
+  function abrirEnvelope() {
     if (aberto) return;
     aberto = true;
 
     const aba = document.getElementById("aba");
     const selo = document.getElementById("selo");
     const carta = document.getElementById("carta");
+    const som = document.getElementById("somSelo");
 
-    // Some selo
+    /* 🔊 TOCA SOM */
+    if (som) {
+      som.currentTime = 0;
+      som.volume = 0.6;
+      som.play().catch(() => {});
+    }
+
+    /* 📳 vibração diferente em mobile e desktip */
+    if (navigator.vibrate && window.innerWidth < 768) {
+      navigator.vibrate([30, 50, 30]);
+    }
+
+    /* some selo */
     selo.classList.add("opacity-0", "scale-0");
 
-    // Abre aba
-    aba.style.transform = "rotateX(180deg)";
-
-    // Carta começa a sair
+    /* abre aba */
     setTimeout(() => {
-      carta.classList.add("papel-saindo");
+      aba.style.transform = "rotateX(180deg)";
+    }, 150);
+
+    /* carta sobe */
+    setTimeout(() => {
       carta.classList.remove("translate-y-24", "scale-95", "opacity-0");
-    }, 500);
+      carta.classList.add("translate-y-0", "opacity-100");
+    }, 600);
   }
-    function entrarNoSite() {
-      const intro = document.getElementById("intro");
-      intro.classList.add("opacity-0");
-      setTimeout(() => {
-        intro.style.display = "none";
-        document.body.classList.remove("overflow-hidden");
-      }, 700);
-    }
   </script>
 </head>
 
@@ -95,10 +117,11 @@
       <div class="absolute inset-3 bg-[radial-gradient(circle,#d6c7b2_1px,transparent_1px)] bg-[size:12px_12px] rounded-xl">
       </div>
       <!-- Carta -->
-      <div id="carta" class="absolute inset-4 bg-white rounded-xl shadow-lg p-8
-         flex flex-col items-center justify-center text-center
-         translate-y-24 scale-95 opacity-0
-         transition-all duration-1000 ease-out z-10">
+      <div id="carta"
+        class="absolute inset-4 bg-white rounded-xl shadow-lg p-8
+        flex flex-col items-center justify-center text-center
+        translate-y-24 scale-95 opacity-0
+        transition-all duration-1000 ease-out z-10">
         <h2 class="text-3xl monsieur-la-doulaise-regular mb-2">
           Amanda & Allan
         </h2>
@@ -111,7 +134,11 @@
       </div>
       <!-- Aba com recorte -->
       <div
-        id="aba" class="absolute inset-x-0 top-0 h-1/2 bg-[#e4d6c3] origin-top transition-transform duration-700 rounded-t-2xl z-20 laser">
+      <div id="aba"
+        class="absolute inset-x-0 top-0 h-1/2 bg-[#e4d6c3]
+        origin-top transition-transform duration-700
+        z-20 laser envelope-flap">
+      </div>
       </div>
       <!-- Selo -->
       <div id="selo" onclick="abrirEnvelope()" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br
@@ -146,10 +173,8 @@
 
   <!-- MAIN -->
   <main class="pt-28 max-w-6xl mx-auto px-4 sm:px-6">
-
     <!-- HOME -->
     <section id="home" class="tab">
-
       <!-- HERO -->
       <div class="relative bg-white rounded-3xl shadow overflow-hidden mb-20">
         <div class="h-[55vh] sm:h-[650px]">
@@ -305,182 +330,105 @@
     </section>
 
     <!-- ABA PRESENTES -->
-<section id="presentes" class="tab hidden bg-[#f0e6da] rounded-3xl shadow p-6 sm:p-12 mb-20">
-
-  <!-- TÍTULO -->
-  <div class="mb-6 text-center">
-
-    <h2 class="text-3xl sm:text-4xl font-serif mb-4">
-      Lista de Presentes
-    </h2>
-
-    <button
-      onclick="abrirRanking()"
-      class="text-sm px-4 py-2 rounded-full border border-neutral-300 bg-white hover:bg-neutral-50 transition"
-    >
-      🏆 Top apoadores
-    </button>
-
-  </div>
-
-  <p class="text-center mb-12 max-w-2xl mx-auto text-sm sm:text-base">
-    Escolha um presente simbólico para nos ajudar a construir essa nova fase.
-  </p>
-
-  <!-- FILTROS -->
-  <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6"></div>
-    <div class="bg-neutral-50 border border-neutral-200 rounded-3xl p-4 sm:p-6 mb-10">
-
-    <!-- GRID -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-
-      <!-- PREÇO -->
-      <div>
-        <label class="text-xs uppercase tracking-widest text-neutral-500">
-          <b>Faixa de preço</b>
-        </label>
-
-        <select id="filtrovalor" class="select-premium">
-          <option value="all">Todos</option>
-          <option value="48">A partir de R$48</option>
-          <option value="100">A partir de R$100</option>
-          <option value="500">A partir de R$500</option>
-          <option value="800">A partir de R$800</option>
-          <option value="1000">A partir de R$1000</option>
-          <option value="2000">A partir de R$2000</option>
-          <option value="3000">A partir de R$3000</option>
-          <option value="3400">A partir de R$3400</option>
-        </select>
-      </div>
-
-      <!-- ORDENAÇÃO -->
-      <div>
-        <label class="text-xs uppercase tracking-widest text-neutral-500">
-          <b>Ordenação</b>
-        </label>
-
-        <select id="filtroEspecial" class="select-premium">
-          <option value="all">Todos</option>
-          <option value="mais-barato">Menor preço</option>
-          <option value="mais-caro">Maior preço</option>
-        </select>
-      </div>
-
-      <!-- CATEGORIA -->
-      <div>
-        <label class="text-xs uppercase tracking-widest text-neutral-500">
-          <b>Categoria</b>
-        </label>
-
-        <select id="filtroCategoria" class="select-premium">
-          <option value="all">Todas</option>
-          <option value="casa">Casa</option>
-          <option value="cozinha">Cozinha</option>
-          <option value="eletrodomesticos">Eletrodomésticos</option>
-          <option value="eletronicos">Eletrônicos</option>
-          <option value="lavanderia">Lavanderia</option>
-          <option value="moveis">Móveis</option>
-          <option value="quarto">Quarto</option>
-          <option value="outros">Outros</option>
-        </select>
-      </div>
-
-      <!-- BUSCA -->
-      <div>
-        <label class="text-xs uppercase tracking-widest text-neutral-500">
-          <b>Buscar</b>
-        </label>
-
-        <input
-          id="filtroBusca"
-          placeholder="Ex: jantar, spa, geladeira..."
-          class="filtros-buscar input-premium"
-        />
-      </div>
-
-    </div>
-
-    <!-- RODAPÉ DOS FILTROS -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
-
-      <!-- CONTADOR -->
-      <p id="contadorPresentes" class="text-sm text-neutral-600"></p>
-
-      <!-- DIREITA -->
-      <div class="flex items-center gap-3">
-        <!-- LIMPAR -->
-        <button
-          id="btnLimparFiltros"
-          class="text-sm underline hover:opacity-70 transition"
-        >
-          Limpar filtros
+    <section id="presentes" class="tab hidden bg-[#f0e6da] rounded-3xl shadow p-6 sm:p-12 mb-20">
+      <!-- TÍTULO -->
+      <div class="mb-6 text-center">
+        <h2 class="text-3xl sm:text-4xl font-serif mb-4">
+          Lista de Presentes
+        </h2>
+        <button onclick="abrirRanking()"
+          class="text-sm px-4 py-2 rounded-full border border-neutral-300 bg-white hover:bg-neutral-50 transition">
+          🏆 Top apoadores
         </button>
-
       </div>
-
-    </div>
-
-  </div>
-
-  <!-- LISTA -->
-<div class="relative">
-
-  <!-- BOTÕES -->
-  <button id="btnPrev"
-    class="absolute -left-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full w-10 h-10 z-10">
-    ‹
-  </button>
-
-  <button id="btnNext"
-    class="absolute -right-4 top-1/2 -translate-y-1/2 bg-white shadow rounded-full w-10 h-10 z-10">
-    ›
-  </button>
-
-  <!-- CARROSSEL -->
-  <div
-    id="lista-presentes"
-    class="flex gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-4"
-  ></div>
-
-</div>
-
-</section>
-
-<!-- MODAL PIX / CRÉDITO -->
-  <div id="modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full text-center shadow-2xl relative">
-
-      <button onclick="fecharModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 transition flex items-center justify-center">✕</button>
-
-      <h3 id="modalTitulo" class="text-2xl font-semibold mb-2"></h3>
-      <p id="modalValor" class="text-neutral-600 mb-6"></p>
-
-      <div class="flex bg-neutral-100 rounded-2xl p-1 mb-6">
-        <button id="btnTabPix"
-          class="flex-1 py-2 rounded-2xl text-sm font-semibold transition bg-white shadow"
-          onclick="trocarMetodoPagamento('pix')">PIX</button>
-
-        <button id="btnTabCredito"
-          class="flex-1 py-2 rounded-2xl text-sm font-semibold transition text-neutral-600 hover:text-neutral-900"
-          onclick="trocarMetodoPagamento('credito')">CRÉDITO</button>
+      <p class="text-center mb-12 max-w-2xl mx-auto text-sm sm:text-base">
+        Escolha um presente simbólico para nos ajudar a construir essa nova fase.
+      </p>
+      <!-- FILTROS -->
+      <div class="bg-neutral-50 border border-neutral-200 rounded-3xl p-4 sm:p-6 mb-10">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <div>
+            <label class="text-xs uppercase tracking-widest text-neutral-500"><b>Faixa de preço</b></label>
+            <select id="filtrovalor" class="select-premium">
+              <option value="all">Todos</option>
+              <option value="48">A partir de R$48</option>
+              <option value="100">A partir de R$100</option>
+              <option value="500">A partir de R$500</option>
+              <option value="800">A partir de R$800</option>
+              <option value="1000">A partir de R$1000</option> 
+              <option value="2000">A partir de R$2000</option>
+              <option value="3000">A partir de R$3000</option>
+              <option value="3400">A partir de R$3400</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs uppercase tracking-widest text-neutral-500"><b>Ordenação</b></label>
+            <select id="filtroEspecial" class="select-premium">
+              <option value="all">Todos</option>
+              <option value="mais-barato">Menor preço</option>
+              <option value="mais-caro">Maior preço</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs uppercase tracking-widest text-neutral-500"><b>Categoria</b></label>
+            <select id="filtroCategoria" class="select-premium">
+              <option value="all">Todas</option>
+              <option value="casa">Casa</option>
+              <option value="cozinha">Cozinha</option>
+              <option value="eletrodomesticos">Eletrodomesticos</option>
+              <option value="eletronicos">Eletrônicos</option>
+              <option value="lavanderia">Lavanderia</option>
+              <option value="moveis">Móveis</option>
+              <option value="quarto">Quarto</option>
+              <option value="outros">Outros</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs uppercase tracking-widest text-neutral-500"><b>Buscar</b></label>
+            <input id="filtroBusca" placeholder="Ex: jantar, spa, geladeira..." class="filtros-buscar input-premium" />
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
+          <p id="contadorPresentes" class="text-sm text-neutral-600"></p>
+          <button id="btnLimparFiltros" class="text-sm underline hover:opacity-70 transition">Limpar filtros</button>
+        </div>
       </div>
+      <div   class="max-h-[60vh] sm:max-h-[70vh] overflow-y-auto pr-2"><!-- limita o scroll PC e mobile-->
+        <div id="lista-presentes" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10"></div>
+      </div>
+      
+    </section>
 
+    <!-- MODAL PIX / CRÉDITO -->
+    <div id="modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full text-center shadow-2xl relative">
+        <button onclick="fecharModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 transition flex items-center justify-center">
+          ✕
+        </button>
+        <h3 id="modalTitulo" class="text-2xl font-semibold mb-2"></h3>
+        <p id="modalValor" class="text-neutral-600 mb-6"></p>
+        <div class="flex bg-neutral-100 rounded-2xl p-1 mb-6">
+          <button id="btnTabPix"
+            class="flex-1 py-2 rounded-2xl text-sm font-semibold transition bg-white shadow"
+            onclick="trocarMetodoPagamento('pix')">PIX</button>
+          <button id="btnTabCredito"
+            class="flex-1 py-2 rounded-2xl text-sm font-semibold transition text-neutral-600 hover:text-neutral-900"
+            onclick="trocarMetodoPagamento('credito')">CRÉDITO</button>
+        </div>
       <div id="areaPix">
         <canvas id="qrcode" class="mx-auto mb-4"></canvas>
         <div class="bg-neutral-100 rounded-2xl p-3 text-sm break-all text-neutral-700" id="pixCopia"></div>
-
         <button onclick="copiarPix()"
-          class="mt-4 w-full bg-neutral-900 text-white py-3 rounded-2xl hover:bg-neutral-800 transition font-semibold">Copiar código PIX</button>
-
+          class="mt-4 w-full bg-neutral-900 text-white py-3 rounded-2xl hover:bg-neutral-800 transition font-semibold">
+          Copiar código PIX
+        </button>
         <p class="text-xs text-neutral-500 mt-4">Escaneie o QR Code ou copie o código.</p>
       </div>
-
       <div id="areaCredito" class="hidden">
         <div class="bg-[#fbf7f2] border border-[#e9dfd4] rounded-2xl p-5 text-left mb-6">
           <p class="text-sm text-neutral-700 font-semibold mb-1">Pagamento com cartão</p>
           <p class="text-sm text-neutral-600">Você será direcionado para uma página segura.</p>
         </div>
-
         <a id="btnlinkpgm"
           href="#"
           target="_blank"
@@ -489,34 +437,33 @@
 
         <p class="text-xs text-neutral-500 mt-4">Uma nova aba será aberta.</p>
       </div>
-
+      </div>
     </div>
-  </div>
 
-  <!-- MODAL RANKING -->
-  <div id="modalRanking" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full relative">
-
-      <button onclick="fecharRanking()"
-        class="absolute top-4 right-4 text-neutral-500 hover:text-neutral-800">✕</button>
-
-      <h3 class="text-2xl font-serif mb-2 text-center">Ranking de Presentes</h3>
-
-      <p class="text-sm text-neutral-500 text-center mb-6">
-        Presentes de maior valor já recebidos 💚
-      </p>
-
-      <div id="listaRanking"
-        class="max-h-[360px] overflow-y-auto space-y-3 pr-2"></div>
-
-      <button onclick="fecharRanking()"
-        class="mt-6 w-full bg-neutral-900 text-white py-2 rounded-lg">Fechar</button>
+    <!-- MODAL RANKING -->
+    <div id="modalRanking" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50 p-4">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full relative">
+        <button onclick="fecharRanking()"
+          class="absolute top-4 right-4 text-neutral-500 hover:text-neutral-800">
+          ✕
+        </button>
+        <h3 class="text-2xl font-serif mb-2 text-center">Ranking de Presentes</h3>
+        <p class="text-sm text-neutral-500 text-center mb-6">
+          Presentes de maior valor já recebidos 💚
+        </p>
+        <div id="listaRanking"
+          class="max-h-[360px] overflow-y-auto space-y-3 pr-2"></div>
+        <button onclick="fecharRanking()"
+          class="mt-6 w-full bg-neutral-900 text-white py-2 rounded-lg">
+          Fechar
+        </button>
+      </div>
     </div>
-  </div>
   </main>
 
-  <!-- SCRIPT PRINCIPAL -->
-  <script src="./app_git.js"></script>
+  <!-- SCRIPT JS e SOM-->
+  <script src="./app_local.js"></script>
+  <audio id="somSelo" src="./papel.mp3" preload="auto"></audio>
 
 </body>
 </html>
