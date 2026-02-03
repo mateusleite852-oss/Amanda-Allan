@@ -231,3 +231,53 @@ button {
   opacity: 1;
   pointer-events: auto;
 }
+
+/* Desktop */
+#lista-presentes > div {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+
+/* Hover só no desktop */
+@media (min-width: 768px) {
+  #lista-presentes > div:hover {
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  }
+}
+
+/* Mobile estilo marketplace */
+@media (max-width: 767px) {
+  #lista-presentes > div {
+    border-radius: 4px;
+    box-shadow: none !important;
+    border: 1px solid #f0f0f0;
+  }
+}
+
+/* Fonte presentes*/
+.presentes-font {
+  font-family: "Aboreto", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Fonte Raking*/
+.raking-font {
+  font-family: "Aboreto", cursive;
+  font-weight: 20;
+  font-style: normal;
+}
+
+/* Fonte momentos especiais home*/
+.home_moment {
+  font-family: "Aboreto", cursive;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.home_grande_dia{
+  font-family: "Aboreto", cursive;
+  font-weight: 100;
+  font-style: normal;
+}
