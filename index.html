@@ -14,14 +14,15 @@
     <!-- CSS -->
     <link rel="stylesheet" href="./styles.css" />
     <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mea+Culpa&family=Monsieur+La+Doulaise&family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mea+Culpa&family=Monsieur+La+Doulaise&family=Sacramento&display=swap" rel="stylesheet">
-
+    
     <!-- SCRIPT GLOBAL (showTab corrigido) -->
     <script>
       function showTab(id) {
@@ -120,29 +121,29 @@
         <div id="carta"
           class="absolute inset-4 bg-white rounded-xl shadow-lg p-8
           flex flex-col items-center justify-center text-center
-          translate-y-24 scale-95 opacity-0
-          transition-all duration-1000 ease-out z-10">
+          translate-y-24 scale-95 opacity-0 transition-all duration-1000 ease-out z-10">
           <h2 class="text-3xl monsieur-la-doulaise-regular mb-2">
             Amanda & Allan
           </h2>
           <p class="text-sm text-neutral-600 mb-4">
-            Parece que você recebeu um convite especial...
+            Parece que você recebeu um convite especial
           </p>
-          <button onclick="entrarNoSite()" class="px-6 py-2 bg-neutral-900 text-white rounded-full text-sm hover:scale-105 transition">
-          Entrar ✨
+          <button onclick="entrarNoSite()" class="px-6 py-2 bg-[#c9b79c] text-white rounded-full text-sm hover:scale-105 transition">
+          Abrir
           </button>
         </div>
         <!-- Aba com recorte -->
         <div
-        <div id="aba"
-          class="absolute inset-x-0 top-0 h-1/2 bg-[#e4d6c3]
+        <div id="aba"class="absolute inset-x-0 top-0 h-1/2 bg-[#e4d6c3]
           origin-top transition-transform duration-700
           z-20 laser envelope-flap">
         </div>
         </div>
         <!-- Selo -->
-        <div id="selo" onclick="abrirEnvelope()" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br
-                from-red-700 to-red-900 rounded-full shadow-xl flex items-center justify-center text-white font-bold cursor-pointer  animate-pulse z-30">
+        <div id="selo" onclick="abrirEnvelope()"
+          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br
+          from-red-700 to-red-900 rounded-full shadow-xl flex items-center justify-center text-white font-bold cursor-pointer
+          animate-pulse z-30">
           A & A
         </div>
       </div>
@@ -166,22 +167,21 @@
         </button>
         <div class="space-x-6 text-sm">
           <button onclick="showTab('home')" class="hover:opacity-70 transition">Home</button>
-          <button onclick="showTab('presentes')" class="hover:opacity-70 transition">Presentes</button>
+          <button onclick="showTab('presentes')" id="btnNavPresentes" class="hover:opacity-70 transition">Presentes</button>
         </div>
       </div>
     </nav>
 
     <!-- MAIN -->
-    <main class="pt-28 max-w-6xl mx-auto px-4 sm:px-6">
+    <main class="pt-24 w-full max-w-full  sm:max-w-6xl xl:max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <!-- HOME -->
       <section id="home" class="tab">
-        <!-- HERO -->
-        <div class="relative bg-white rounded-3xl shadow overflow-hidden mb-20">
+        <div class="relative bg-white rounded-xl sm:rounded-3xl shadow overflow-hidden mb-20">
           <div class="h-[55vh] sm:h-[650px]">
             <img
               src="./home.png"
               alt="Foto home"
-              class="w-full h-[55vh] sm:h-[650px] object-cover rounded-3xl"
+              class="w-full h-[55vh] sm:h-[650px] object-cover rounded-xl sm:rounded-3xl"
             />
             <div class="absolute inset-0 bg-black/20" ></div>
           </div>
@@ -199,59 +199,12 @@
             </div>
           </div>
         </div>
-
-        <!-- NOSSA HISTÓRIA - TIMELINE -->
-<!--        <section class="mb-24 ">
-<!--          <div class="text-center mb-14">
-<!--            <p class="uppercase tracking-[0.25em] text-xs text-neutral-500 mb-3">Nossa História</p>
-<!--          </div>
-<!--          <div class="relative space-y-16">
-<!--            <!-- LINHA -->
-<!--            <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-neutral-300"></div>
-<!--            <!-- ITEM 1 -->
-<!--            <div class="flex flex-row md:flex-row items-center gap-4 sm:gap-6">
-<!--              <div class="md:w-1/2 md:text-right">
-<!--                <img src="./l1.jpg" class="w-full h-64 sm:h-80 object-cover rounded-3xl shadow" />
-<!--              </div>
-<!--              <div class="hidden md:block w-4 h-4 bg-[#c9b79c] rounded-full"></div>
-<!--              <div class="flex-1 md:w-1/2">
-<!--                <p class="text-xs text-neutral-500 mb-1">05/2025</p>
-<!--                <h3 class="text-xl font-semibold mb-2">Quando nos conhecemos</h3>
-<!--                <p class="text-neutral-600 text-sm">Sem saber que estaríamos ligados para o resto da vida.</p>
-<!--              </div>
-<!--            </div>
-<!--            <!-- ITEM 2 -->
-<!--            <div class="flex flex-row-reverse md:flex-row-reverse items-center gap-4 sm:gap-6">
-<!--              <div class="md:w-1/2">
-<!--                <img src="./l2.jpeg" class="w-32 h-32 sm:w-full sm:h-80 object-cover rounded-3xl shadow" />
-<!--              </div>
-<!--              <div class="hidden md:block w-4 h-4 bg-[#c9b79c] rounded-full"></div>
-<!--              <div class="flex-1 md:w-1/2 md:text-right">
-<!--                <p class="text-xs text-neutral-500 mb-1">11/2025</p>
-<!--                <h3 class="text-xl font-semibold mb-2">Pedido de namoro</h3>
-<!--                <p class="text-neutral-600 text-sm">Momento mágico de nossas vidas.</p>
-<!--              </div>
-<!--            </div>
-<!--            <!-- ITEM 3 -->
-<!--            <div class="flex flex-row md:flex-row items-center gap-4 sm:gap-6">
-<!--              <div class="md:w-1/2 md:text-right">
-<!--                <img src="./l3.jpg" class="w-full object-cover rounded-3xl shadow" />
-<!--              </div>
-<!--              <div class="hidden md:block w-4 h-4 bg-[#c9b79c] rounded-full"></div>
-<!--              <div class="flex-1md:w-1/2">
-<!--                <p class="text-xs text-neutral-500 mb-1">12/2025</p>
-<!--                <h3 class="text-xl font-semibold mb-2">Pedido de casamento</h3>
-<!--                <p class="text-neutral-600 text-sm">Novo começo.</p>
-<!--              </div>
-<!--            </div>
-<!--          </div>
-<!--        </section> -->
         <!-- TIMELINE CARROSSEL -->
         <section class="mb-24">
 
           <div class="text-center mb-10">
             <p class="uppercase tracking-[0.25em] text-xs text-neutral-500 mb-2">Nossa História</p>
-            <h2 class="text-3xl sm:text-4xl font-serif">Momentos Especiais</h2>
+            <h2 class="text-2xl home_moment">Momentos Especiais</h2>
           </div>
 
           <!-- Wrapper -->
@@ -315,7 +268,7 @@
         <!-- O GRANDE DIA -->
         <section class="bg-white rounded-3xl shadow p-6 sm:p-12 mb-20 text-center">
 
-          <h2 class="text-3xl sm:text-4xl font-serif mb-6">O grande dia está chegando</h2>
+          <h2 class="text-2xl sm:text-1xl home_grande_dia mb-6">O grande dia está chegando</h2>
 
           <p class="text-base sm:text-lg mb-8 text-neutral-600">
             Alameda Sol Nascente, 10 · Mairiporã
@@ -371,23 +324,28 @@
       </section>
 
       <!-- ABA PRESENTES -->
-      <section id="presentes" class="tab hidden
-        bg-gradient-to-br from-[#f0e6da] to-[#f7f3ee]
-        rounded-3xl shadow
-        p-6 sm:p-12 mb-20">
-        <!-- TÍTULO -->
-        <div class="mb-6 text-center">
-          <h2 class="text-3xl sm:text-4xl font-serif mb-4">
-            Lista de Presentes
+      <section id="presentes" class="tab hidden bg-gradient-to-br from-[#f0e6da] to-[#f7f3ee] rounded-3xl shadow p-3 sm:p-10 mb-16">
+        <div class="mb-10 text-center">
+          <!-- Título -->
+          <h2 class="presentes-font text-3xl tracking-tight mb-3 items-center justify-center gap-2">
+            Nossa Lista de Presentes
           </h2>
-          <button onclick="abrirRanking()"
-            class="text-sm px-4 py-2 rounded-full border border-neutral-300 bg-white hover:bg-neutral-50 transition">
-            🏆 Top apoadores
-          </button>
+          <!-- Botões -->
+          <div class="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
+            <!-- Ranking -->
+            <button
+              onclick="abrirRanking()"
+              class="px-5 py-2.5 rounded-full border border-[#c9b79c] text-[#7a6549] bg-white text-sm
+                font-medium hover:bg-[#f5efe7] transition">
+                Apoiadores
+            </button>
+            <!-- CTA -->
+            <a href="#lista-presentes" class=" px-6 py-2.5 rounded-full bg-[#c9b79c] text-white text-sm font-semibold
+                hover:opacity-90 transition shadow-sm ">
+              Escolher presente
+            </a>
+          </div>
         </div>
-        <p class="text-center mb-12 max-w-2xl mx-auto text-sm sm:text-base">
-          Escolha um presente simbólico para nos ajudar a construir essa nova fase.
-        </p>
         <!-- FILTROS -->
         <div class="bg-neutral-50 border border-neutral-200 rounded-3xl p-4 sm:p-6 mb-10">
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -438,7 +396,7 @@
           </div>
         </div>
         <div   class="sm:max-h-[70vh] overflow-y-auto pr-2"><!-- limita o scroll PC apenas-->
-          <div id="lista-presentes" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-8"></div>
+          <div id="lista-presentes" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4"></div>
         </div>
       </section>
 
@@ -488,7 +446,7 @@
             class="absolute top-4 right-4 text-neutral-500 hover:text-neutral-800">
             ✕
           </button>
-          <h3 class="text-2xl font-serif mb-2 text-center">Ranking de Presentes</h3>
+          <h3 class="raking-font p-3 mb-2 text-center">Ranking de Presentes</h3>
           <div id="listaRanking"
             class="max-h-[360px] overflow-y-auto space-y-3 pr-2"></div>
           <button onclick="fecharRanking()"
@@ -505,4 +463,3 @@
 
   </body>
 </html>
-
