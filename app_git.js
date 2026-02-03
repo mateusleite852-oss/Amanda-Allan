@@ -686,12 +686,10 @@ document.addEventListener('DOMContentLoaded', () => {
   showTab('home');
   iniciarContagem();
   initModalClose();
-  initTooltipDesktopHover();
-
+  
   // ✅ filtros + render
   initFiltrosPresentes();
   renderPresentes();
-  initCarousel();
   
   setTimeout(() => {
     ajustarTamanhoCards();
