@@ -8,21 +8,55 @@ const dataCasamento = new Date('2026-12-19T16:00:00');
 
 // NAV / UI
 function showTab(id) {
-  document.querySelectorAll('.tab').forEach(tab => tab.classList.add('hidden'));
+
+  // Esconde todas as abas
+  document
+    .querySelectorAll('.tab')
+    .forEach(tab => tab.classList.add('hidden'));
+
+  // Mostra a ativa
   const active = document.getElementById(id);
   if (active) active.classList.remove('hidden');
 
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Remove destaque do menu
+  document
+    .querySelectorAll('nav button')
+    .forEach(b =>
+      b.classList.remove('font-bold', 'text-neutral-900')
+    );
+
+  // Destaca aba atual Presents
+  if (id === 'presentes') {
+    const btn = document.getElementById('btnNavPresentes');
+    if (btn) {
+      btn.classList.add('text-neutral-900');
+    }
+  }
+  // Destaca aba atual Home
+  if (id === 'home') {
+    const btn = document.getElementById('btnNavHome');
+    if (btn) {
+      btn.classList.add('text-neutral-900');
+    }
+  }
+
+
+  // Scroll pro topo
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 }
 
 // lISTA DE PRESENTES
 const presentes = [
-  { id: 1,  nome: 'Jogo de Panelas', valor: 260, imagem: './1.png', categoria: 'cozinha', linkpgm: '#',pago: false, pagoPor: ''},
-  { id: 2,  nome: 'Lava e Seca', valor: 3060, imagem: './2.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 3,  nome: 'Aspirador', valor: 170, imagem: './3.png', categoria: 'eletrodomesticos', linkpgm: '#',pago: false, pagoPor: ''},
-  { id: 4,  nome: 'Cesto Roupa Bambu', valor: 94, imagem: './4.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 5,  nome: 'Geladeira', valor: 3400, imagem: './5.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 6,  nome: 'Micro-ondas', valor: 570, imagem: './6.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 1,  nome: 'Jogo de Panelas', valor: 260, imagem: './1.png', categoria: 'cozinha', linkpgm: '#',pago: true, pagoPor: 'Mateus Noronha'},
+  { id: 2,  nome: 'Lava e Seca', valor: 3060, imagem: './2.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: true, pagoPor: 'Leticia Aguiar'},
+  { id: 3,  nome: 'Aspirador', valor: 170, imagem: './3.png', categoria: 'eletrodomesticos', linkpgm: '#',pago: true, pagoPor: 'Juraci Leite'},
+  { id: 4,  nome: 'Cesto Roupa Bambu', valor: 94, imagem: './4.png', categoria: 'casa', linkpgm: '#', pago: true, pagoPor: 'Mario Aguiar'},
+  { id: 5,  nome: 'Geladeira', valor: 3400, imagem: './5.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: true, pagoPor: 'Maria Noronha'},
+  { id: 6,  nome: 'Micro-ondas', valor: 570, imagem: './6.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: true, pagoPor: 'Amanda Silva'},
   { id: 7,  nome: 'Fogão', valor: 1350, imagem: './7.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
   { id: 8,  nome: 'Liquidificador', valor: 170, imagem: './8.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
   { id: 9,  nome: 'Jogo de Jantar', valor: 320, imagem: './9.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
@@ -197,44 +231,51 @@ function renderPresentes() {
     const isPago = p.pago === true; // marca presente como pago
     const card = document.createElement('div');
     card.className = `
-      group bg-white rounded-xl shadow p-8 text-center transition-all duration-300
-      ${isPago 
-        ? 'opacity-60 cursor-not-allowed' 
-        : 'cursor-pointer hover:-translate-y-2 hover:shadow-xl'}
-    `;
+    bg-white
+    overflow-hidden
+    border border-neutral-200
+    rounded-md
+    transition
+    active:scale-[0.98]
+  `;
 
-    card.innerHTML = `
-      <div class="h-44 mb-5 overflow-hidden rounded-2xl bg-neutral-50 flex items-center justify-center">
-        <img 
-          src="${p.imagem}" 
-          alt="${p.nome}" 
-          class="w-full h-full object-contain p-3 transition-transform duration-500
-                 ${isPago ? '' : 'group-hover:scale-110'}"
-        />
-      </div>
+  card.innerHTML = `<!-- IMAGEM -->
+  <div class="w-full aspect-square bg-white flex items-center justify-center">
+    <img 
+      src="${p.imagem}"
+      alt="${p.nome}"
+      class="w-full h-full object-contain p-1"
+      loading="lazy"
+    />
+  </div>
+  <!-- INFO -->
+  <div class="px-2 py-2 text-left">
 
-    <h3 class="text-xl font-semibold mb-2">${p.nome}</h3>
-
+    <h3 class="text-xs leading-tight line-clamp-2 text-neutral-800 mb-1">
+      ${p.nome}
+    </h3>
     ${
       isPago
-        ? `<span class="inline-block mt-2 text-xs font-semibold text-green-700 bg-green-100 px-3 py-1 rounded-full">
-             Presente já recebido por ${p.pagoPor} 💚
-           </span>`
-        : `<p class="text-neutral-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-             ${formatarMoeda(p.valor)}
-           </p>`
-    }
-    `;
-
-    if (!isPago) {
-      card.addEventListener('click', () => {
-        const idxOriginal = presentes.findIndex(x => x.id === p.id);
-        abrirModal(idxOriginal);
-      });
+      ? `<p class="text-[11px] text-green-600 font-medium">
+          💚 ${p.pagoPor}
+        </p>`
+      : `<p class="text-sm font-bold text-green-700">
+          ${formatarMoeda(p.valor)}
+        </p>`
     }
 
-    lista.appendChild(card);
-  });
+  </div>
+`;
+
+  if (!isPago) {
+    card.addEventListener('click', () => {
+      const idxOriginal = presentes.findIndex(x => x.id === p.id);
+      abrirModal(idxOriginal);
+    });
+  }
+
+  lista.appendChild(card);
+});
 
 //ajustarImagensCards(); sem utilidade
 
@@ -547,14 +588,14 @@ function fecharRanking() {
 function renderRanking() {
   const lista = document.getElementById('listaRanking');
   if (!lista) return;
-  
+
   const pagos = presentes
     .filter(p => p.pago === true)
     .sort((a, b) => b.valor - a.valor);
 
   if (pagos.length === 0) {
     lista.innerHTML = `
-      <li class="text-center text-neutral-500">
+      <li class="text-center text-neutral-500 py-6">
         Seja o primeiro a presentear! 🎉
       </li>
     `;
@@ -564,14 +605,60 @@ function renderRanking() {
   lista.innerHTML = '';
 
   pagos.forEach((p, i) => {
+
+    let medalha = '🎁';
+    let cor = 'bg-neutral-50';
+    let destaque = '';
+
+    if (i === 0) {
+      medalha = '🥇';
+      cor = 'bg-yellow-50 border border-yellow-300';
+      destaque = 'scale-100 shadow-md';
+    }
+
+    if (i === 1) {
+      medalha = '🥈';
+      cor = 'bg-gray-50 border border-gray-300';
+    }
+
+    if (i === 2) {
+      medalha = '🥉';
+      cor = 'bg-orange-50 border border-orange-300';
+    }
+
     lista.innerHTML += `
-      <li class="flex justify-between items-center bg-neutral-50 rounded-xl px-4 py-3">
-        <span>
-          ${i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '🎁'}
-          <strong>${p.pagoPor}</strong>
-        </span>
-        <span class="font-medium">${p.nome}</span>
-        <span class="font-medium">${formatarMoeda(p.valor)}</span>
+
+      <li class="
+        flex items-center gap-3
+        ${cor}
+        rounded-xl px-4 py-3 mb-3
+        ${destaque}
+        transition
+      ">
+
+        <!-- Medalha -->
+        <div class="text-2xl">
+          ${medalha}
+        </div>
+
+        <!-- Info -->
+        <div class="flex-1 text-sm">
+
+          <p class="font-semibold text-neutral-800">
+            ${p.pagoPor}
+          </p>
+
+          <p class="text-xs text-neutral-500">
+            ${p.nome}
+          </p>
+
+        </div>
+
+        <!-- Valor -->
+        <div class="text-sm font-bold text-green-700">
+          ${formatarMoeda(p.valor)}
+        </div>
+
       </li>
     `;
   });
@@ -686,7 +773,7 @@ document.addEventListener('DOMContentLoaded', () => {
   showTab('home');
   iniciarContagem();
   initModalClose();
-  
+
   // ✅ filtros + render
   initFiltrosPresentes();
   renderPresentes();
