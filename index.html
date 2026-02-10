@@ -1,4 +1,4 @@
-<!-- --------------------LOCAL V3-------------------->
+<!-- --------------------LOCAL V4-------------------->
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -12,7 +12,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <!-- CSS -->
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="/assets/css/styles.css" />
     <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -179,7 +179,7 @@
         <div class="relative bg-white rounded-xl sm:rounded-3xl shadow overflow-hidden mb-20">
           <div class="h-[55vh] sm:h-[650px]">
             <img
-              src="./home.png"
+              src="/img/home.png"
               alt="Foto home"
               class="w-full h-[55vh] sm:h-[650px] object-cover rounded-xl sm:rounded-3xl"
             />
@@ -228,7 +228,7 @@
               <!-- Slide 1 -->
               <div class="fade-slide active absolute inset-0 flex items-center justify-center px-2">
                 <div class="w-full bg-[#fffdf9]/90 backdrop-blur rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center border border-[#e7dccf]">
-                  <img src="./l1.jpg" class="w-full sm:w-1/2 h-64 object-cover rounded-2xl" />
+                  <img src="/img/l1.jpg" class="w-full sm:w-1/2 h-64 object-cover rounded-2xl" />
                   <div class="text-center sm:text-left">
                     <p class="text-xs text-neutral-500">05/2025</p>
                     <h3 class="text-xl font-semibold mb-2">Quando nos conhecemos</h3>
@@ -240,7 +240,7 @@
               <!-- Slide 2 -->
               <div class="fade-slide absolute inset-0 flex items-center justify-center px-2">
                 <div class="w-full bg-[#fffdf9]/90 backdrop-blur rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center border border-[#e7dccf]">
-                  <img src="./l2.jpeg" class="w-full sm:w-1/2 h-64 object-cover rounded-2xl" />
+                  <img src="/img/l2.jpeg" class="w-full sm:w-1/2 h-64 object-cover rounded-2xl" />
                   <div class="text-center sm:text-left">
                     <p class="text-xs text-neutral-500">11/2022</p>
                     <h3 class="text-xl font-semibold mb-2">Pedido de namoro</h3>
@@ -252,7 +252,7 @@
               <!-- Slide 3 -->
               <div class="fade-slide absolute inset-0 flex items-center justify-center px-2">
                 <div class="w-full bg-[#fffdf9]/90 backdrop-blur rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center border border-[#e7dccf]">
-                  <img src="./l3.jpg" class="w-full sm:w-1/2 h-64 object-cover rounded-2xl" />
+                  <img src="/img/l3.jpg" class="w-full sm:w-1/2 h-64 object-cover rounded-2xl" />
                   <div class="text-center sm:text-left">
                     <p class="text-xs text-neutral-500">12/2025</p>
                     <h3 class="text-xl font-semibold mb-2">Pedido de casamento</h3>
@@ -458,8 +458,12 @@
     </main>
 
     <!-- SCRIPT JS e SOM-->
-    <script src="./app_git.js"></script>
-    <audio id="somSelo" src="./papel.mp3" preload="auto"></audio>
-
+    <script src="/assets/js/abas.js"></script>
+    <script src="/assets/js/apoiadores.js"></script>
+    <script src="/assets/js/carrossel.js"></script>
+    <script src="/assets/js/contador.js"></script>
+    <script src="/assets/js/inicializa.js"></script>
+    <script src="/assets/js/presentes.js"></script>
+    <audio id="somSelo" src="/som/papel.mp3" preload="auto"></audio>
   </body>
 </html>
