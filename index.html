@@ -1,4 +1,4 @@
-<!-- --------------------LOCAL V3-------------------->
+<!-- --------------------LOCAL V5-------------------->
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -42,125 +42,119 @@
       }
     function entrarNoSite() {
       const intro = document.getElementById("intro");
-      const aviso = document.getElementById("aviso-mobile");
+      if (!intro) return;
 
-      // Some o aviso imediatamente
-      if (aviso) {
-        aviso.style.display = "none";
+      intro.style.setProperty("--swipe-progress", "1");
+      intro.classList.add("intro-exit");
+      document.body.classList.add("site-ready");
+
+      if (navigator.vibrate && window.innerWidth < 768) {
+        navigator.vibrate(40);
       }
-
-      // Some o envelope
-      intro.classList.add("opacity-0");
 
       setTimeout(() => {
         intro.style.display = "none";
         document.body.classList.remove("overflow-hidden");
-      }, 700);
+      }, 850);
     }
-    document.addEventListener('DOMContentLoaded', () => {
-      // Abre home por padrão
-      showTab('home');
 
-      // Garante que presentes seja carregado
+    function initIntroSwipe() {
+      const intro = document.getElementById("intro");
+      if (!intro) return;
+
+      const threshold = 95;
+      let startY = 0;
+      let deltaY = 0;
+      let dragging = false;
+
+      function setProgress(currentDelta) {
+        const upDistance = Math.max(0, -currentDelta);
+        const progress = Math.min(upDistance / threshold, 1);
+        intro.style.setProperty("--swipe-progress", progress.toString());
+      }
+
+      function onStart(clientY) {
+        if (document.body.classList.contains("site-ready")) return;
+        dragging = true;
+        startY = clientY;
+        deltaY = 0;
+        intro.classList.add("is-dragging");
+      }
+
+      function onMove(clientY) {
+        if (!dragging) return;
+        deltaY = clientY - startY;
+        setProgress(deltaY);
+      }
+
+      function onEnd() {
+        if (!dragging) return;
+        dragging = false;
+        intro.classList.remove("is-dragging");
+
+        if (-deltaY >= threshold) {
+          entrarNoSite();
+          return;
+        }
+
+        intro.style.setProperty("--swipe-progress", "0");
+      }
+
+      intro.addEventListener("touchstart", (e) => {
+        onStart(e.touches[0].clientY);
+      }, { passive: true });
+
+      intro.addEventListener("touchmove", (e) => {
+        onMove(e.touches[0].clientY);
+        if (dragging) e.preventDefault();
+      }, { passive: false });
+
+      intro.addEventListener("touchend", onEnd);
+      intro.addEventListener("touchcancel", onEnd);
+
+      intro.addEventListener("mousedown", (e) => {
+        if (e.button !== 0) return;
+        onStart(e.clientY);
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        onMove(e.clientY);
+      });
+
+      window.addEventListener("mouseup", onEnd);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      showTab('home');
+      initIntroSwipe();
+
       if (typeof renderPresentes === 'function') {
         renderPresentes();
       }
     });
-
-    let aberto = false;
-
-    function abrirEnvelope() {
-      if (aberto) return;
-      aberto = true;
-
-      const aba = document.getElementById("aba");
-      const selo = document.getElementById("selo");
-      const carta = document.getElementById("carta");
-      const som = document.getElementById("somSelo");
-
-      /* 🔊 TOCA SOM */
-      if (som) {
-        som.currentTime = 0;
-        som.volume = 0.6;
-        som.play().catch(() => {});
-      }
-
-      /* 📳 vibração diferente em mobile e desktip */
-      if (navigator.vibrate && window.innerWidth < 768) {
-        navigator.vibrate([30, 50, 30]);
-      }
-
-      /* some selo */
-      selo.classList.add("opacity-0", "scale-0");
-
-      /* abre aba */
-      setTimeout(() => {
-        aba.style.transform = "rotateX(180deg)";
-      }, 150);
-
-      /* carta sobe */
-      setTimeout(() => {
-        carta.classList.remove("translate-y-24", "scale-95", "opacity-0");
-        carta.classList.add("translate-y-0", "opacity-100");
-      }, 600);
-    }
     </script>
   </head>
 
   <body class="bg-[#f7f5f2] text-neutral-800 overflow-hidden">
-    <!-- INTRO ENVELOPE LUXO -->
-    <div id="intro" class="fixed inset-0 bg-[#f7f5f2] flex flex-col sm:flex-col items-center justify-center z-[999] overflow-hidden gap-4">
-      <div id="envelope" class="relative w-[320px] h-[220px] sm:w-[500px] sm:h-[400px] perspective"  >
-        <!-- Base -->
-        <div class="absolute inset-0 bg-[#f1e8dc] rounded-2xl shadow-2xl border border-[#e3d6c5]">
-        </div>
-        <!-- Liner interno -->
-        <div class="absolute inset-3 bg-[radial-gradient(circle,#d6c7b2_1px,transparent_1px)] bg-[size:12px_12px] rounded-xl">
-        </div>
-        <!-- Carta -->
-        <div id="carta"
-          class="absolute inset-4 bg-white rounded-xl shadow-lg p-8
-          flex flex-col items-center justify-center text-center
-          translate-y-24 scale-95 opacity-0 transition-all duration-1000 ease-out z-10">
-          <h2 class="text-3xl monsieur-la-doulaise-regular mb-2">
-            Amanda & Allan
-          </h2>
-          <p class="text-sm text-neutral-600 mb-4">
-            Parece que você recebeu um convite especial
-          </p>
-          <button onclick="entrarNoSite()" class="px-6 py-2 bg-[#c9b79c] text-white rounded-full text-sm hover:scale-105 transition">
-          Abrir
-          </button>
-        </div>
-        <!-- Aba com recorte -->
-        <div
-        <div id="aba"class="absolute inset-x-0 top-0 h-1/2 bg-[#e4d6c3]
-          origin-top transition-transform duration-700
-          z-20 laser envelope-flap">
-        </div>
-        </div>
-        <!-- Selo -->
-        <div id="selo" onclick="abrirEnvelope()"
-          class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-br
-          from-red-700 to-red-900 rounded-full shadow-xl flex items-center justify-center text-white font-bold cursor-pointer
-          animate-pulse z-30">
-          A & A
-        </div>
-      </div>
-      <!-- Aviso Mobile Fora -->
-      <div id="aviso-mobile" class="block sm:hidden mt-6 text-center px-4">
-        <div class="inline-block bg-white/90 backdrop-blur
-              border border-neutral-200
-              rounded-xl px-3 py-2
-              text-xs text-neutral-600 shadow-sm leading-snug"  >
-        📱 Para melhor experiência, ative<br>
-        <b>"Site para computador"</b>
-        </div>
+        <!-- INTRO MICROEXPERIENCIA -->
+    <div id="intro" class="fixed inset-0 z-[999] flex items-center justify-center px-4 py-6 sm:py-10 bg-[radial-gradient(circle_at_top,#f9f6f2_0%,#ece3d7_60%,#e4d6c3_100%)] overflow-hidden">
+      <div class="intro-stage w-full max-w-[980px]">
+        <div class="intro-card relative rounded-[28px] overflow-hidden border border-[#e8dccf] shadow-2xl">
+          <img
+            src="./intro.jpeg"
+            alt="Amanda e Allan"
+            class="intro-photo w-full max-h-[72vh] sm:max-h-[80vh] object-contain bg-[#f7f3ed]"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent"></div>
+          <div class="intro-hint absolute left-1/2 -translate-x-1/2 bottom-5 sm:bottom-7 text-center select-none">
+            <p class="text-white/90 text-[11px] sm:text-xs tracking-[0.16em] uppercase">Deslize para abrir</p>
+            <span class="intro-hint-bar" aria-hidden="true"></span>
+          </div></div>
       </div>
     </div>
-    
+
     <!-- NAV -->
-    <nav class="bg-white shadow fixed w-full z-10">
+    <nav class="site-shell bg-white shadow fixed w-full z-10">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
         <button onclick="showTab('home')" class="hover:opacity-70 transition">
           <span class="font-semibold text-lg">Amanda & Allan</span>
@@ -173,7 +167,7 @@
     </nav>
 
     <!-- MAIN -->
-    <main class="pt-24 w-full max-w-full  sm:max-w-6xl xl:max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+    <main class="site-shell pt-24 w-full max-w-full  sm:max-w-6xl xl:max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <!-- HOME -->
       <section id="home" class="tab">
         <div class="relative bg-white rounded-xl sm:rounded-3xl shadow overflow-hidden mb-20">
@@ -414,7 +408,7 @@
               onclick="trocarMetodoPagamento('pix')">PIX</button>
             <button id="btnTabCredito"
               class="flex-1 py-2 rounded-2xl text-sm font-semibold transition text-neutral-600 hover:text-neutral-900"
-              onclick="trocarMetodoPagamento('credito')">CRÉDITO</button>
+              onclick="trocarMetodoPagamento('credito')">CARTÃO</button>
           </div>
         <div id="areaPix">
           <canvas id="qrcode" class="mx-auto mb-4"></canvas>
@@ -427,14 +421,14 @@
         </div>
         <div id="areaCredito" class="hidden">
           <div class="bg-[#fbf7f2] border border-[#e9dfd4] rounded-2xl p-5 text-left mb-6">
-            <p class="text-sm text-neutral-700 font-semibold mb-1">Pagamento com cartão</p>
-            <p class="text-sm text-neutral-600">Você será direcionado para uma página segura.</p>
+            <p class="text-sm text-neutral-700 font-semibold mb-1">Deseja presentar utilizando cartão de crédito?</p>
+            <p class="text-sm text-neutral-600">Fale com um dos noivos para receber o link de pagamento</p>
           </div>
           <a id="btnlinkpgm"
             href="#"
             target="_blank"
             rel="noopener noreferrer"
-            class="w-full inline-block bg-[#c9b79c] text-white text-center py-3 rounded-2xl hover:opacity-90 transition font-semibold">Acessar link para pagamento</a>
+            class="w-full inline-block bg-[#c9b79c] text-white text-center py-3 rounded-2xl hover:opacity-90 transition font-semibold">Falar no WhatsApp</a>
         </div>
         </div>
       </div>
@@ -458,13 +452,11 @@
     </main>
 
     <!-- SCRIPT JS e SOM-->
-    <script src="./abas.js"></script>
-    <script src="./apoiadores.js"></script>
-    <script src="./carrossel.js"></script>
-    <script src="./contador.js"></script>
-    <script src="./inicializa.js"></script>
-    <script src="./presentes_git.js"></script>
-    <audio id="somSelo" src="./papel.mp3" preload="auto"></audio>
+    <script src="/assets/js/abas.js"></script>
+    <script src="/assets/js/apoiadores.js"></script>
+    <script src="/assets/js/carrossel.js"></script>
+    <script src="/assets/js/contador.js"></script>
+    <script src="/assets/js/inicializa.js"></script>
+    <script src="/assets/js/presentes_git.js"></script>
   </body>
 </html>
-
