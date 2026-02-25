@@ -230,7 +230,7 @@ body.site-ready .site-shell {
 
 .intro-hint {
   opacity: calc(1 - var(--swipe-progress) * 1.5);
-  transform: translateX(-50%) translateY(calc(var(--swipe-progress) * -18px));
+  transform: translateY(calc(var(--swipe-progress) * -12px));
   transition: opacity 260ms ease, transform 260ms ease;
 }
 
@@ -240,7 +240,7 @@ body.site-ready .site-shell {
   height: 34px;
   margin: 8px auto 0;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(110, 77, 70, 0.45);
   position: relative;
 }
 
@@ -248,8 +248,8 @@ body.site-ready .site-shell {
   content: "";
   width: 8px;
   height: 8px;
-  border-right: 2px solid rgba(255, 255, 255, 0.9);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+  border-right: 2px solid rgba(110, 77, 70, 0.75);
+  border-bottom: 2px solid rgba(110, 77, 70, 0.75);
   transform: rotate(-135deg);
   position: absolute;
   left: 50%;
