@@ -4,6 +4,7 @@ let metodoPagamento = "pix"; // default
 const pixKey = '48017327803'; // CPF
 const recebedorPix = 'MATEUS DE NORONHA LEITE'; // nome do recebedor
 const cidadePix = 'SAO PAULO'; // cidade do recebedor
+const whatsappNoivo = '5511986332987'; // Número do WhatsApp para contato
 
 // PIX (BR CODE OFICIAL)
 function gerarPixBRCode(valor) {
@@ -82,19 +83,10 @@ function abrirModal(index) {
   const canvas = document.getElementById('qrcode');
   QRCode.toCanvas(canvas, payload, { width: 220 });
 
-  // CRÉDITO
+  // CARTAO VIA WHATSAPP
   const btnlinkpgm = document.getElementById("btnlinkpgm");
-  const btnTabCredito = document.getElementById("btnTabCredito");
-
-  if (p.linkpgm && p.linkpgm.trim() !== "") {
-    btnlinkpgm.href = p.linkpgm;
-    btnTabCredito.disabled = false;
-    btnTabCredito.classList.remove("opacity-40", "pointer-events-none");
-  } else {
-    // sem link -> desabilita
-    btnlinkpgm.href = "#";
-    btnTabCredito.disabled = true;
-    btnTabCredito.classList.add("opacity-40", "pointer-events-none");
+  if (btnlinkpgm) {
+    btnlinkpgm.href = gerarLinkWhatsappPagamento(p);
   }
 
   const modal = document.getElementById('modal');
@@ -108,6 +100,16 @@ function fecharModal() {
   modal.classList.remove('flex');
 }
 
+function gerarLinkWhatsappPagamento(presente) {
+  const texto = [
+    "Olá noivos. Quero presentear vocês!",
+    `Presente: ${presente.nome}`,
+    `Valor: ${formatarMoeda(presente.valor)}`,
+    "Quero pagar no cartão de crédito. Podem me enviar o link de pagamento?"
+  ].join("\n");
+
+  return `https://wa.me/${whatsappNoivo}?text=${encodeURIComponent(texto)}`;
+}
 //Copiar código PIX
 function copiarPix() {
   const pixEl = document.getElementById('pixCopia');
@@ -496,5 +498,4 @@ function initFiltrosPresentes() {
     filtroEspecial.value = 'all';
     renderPresentes();
   });
-
 }
