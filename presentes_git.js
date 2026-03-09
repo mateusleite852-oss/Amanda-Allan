@@ -1,8 +1,8 @@
 // CONFIG PIX
 let presenteSelecionado = null;
 let metodoPagamento = "pix"; // default
-const pixKey = '48017327803'; // CPF
-const recebedorPix = 'MATEUS DE NORONHA LEITE'; // nome do recebedor
+const pixKey = '45806084884'; // CPF
+const recebedorPix = 'AMANDA NASCIMENTO DOS SANTOS'; // nome do recebedor
 const cidadePix = 'SAO PAULO'; // cidade do recebedor
 const whatsappNoivo = '5511986332987'; // Número do WhatsApp para contato
 
@@ -206,13 +206,13 @@ function trocarMetodoPagamento(metodo) {
 
 // lISTA DE PRESENTES
 const presentes = [
-  { id: 1,  nome: 'Jogo de Panelas', valor: 260, imagem: './1.png', categoria: 'cozinha', linkpgm: '#',pago: true, pagoPor: 'Mateus Noronha'},
-  { id: 2,  nome: 'Lava e Seca', valor: 3060, imagem: './2.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: true, pagoPor: 'Leticia Aguiar'},
-  { id: 3,  nome: 'Aspirador', valor: 170, imagem: './3.png', categoria: 'eletrodomesticos', linkpgm: '#',pago: true, pagoPor: 'Juraci Leite'},
-  { id: 4,  nome: 'Cesto Roupa Bambu', valor: 94, imagem: './4.png', categoria: 'casa', linkpgm: '#', pago: true, pagoPor: 'Mario Aguiar'},
-  { id: 5,  nome: 'Geladeira', valor: 3400, imagem: './5.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: true, pagoPor: 'Maria Noronha'},
-  { id: 6,  nome: 'Micro-ondas', valor: 570, imagem: './6.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: true, pagoPor: 'Amanda Silva'},
-  { id: 7,  nome: 'Fogão', valor: 1350, imagem: './7.png', categoria: 'eletrodomesticos', linkpgm: 'https://payment-link-v3.ton.com.br/pl_KogR9Grkpx10Am0ofnIkYEa5J76zjdqN', pago: false, pagoPor: ''},
+  { id: 1,  nome: 'Jogo de Panelas', valor: 260, imagem: './1.png', categoria: 'cozinha', linkpgm: '#',pago: false, pagoPor: ''},
+  { id: 2,  nome: 'Lava e Seca', valor: 3060, imagem: './2.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 3,  nome: 'Aspirador', valor: 170, imagem: './3.png', categoria: 'eletrodomesticos', linkpgm: '#',pago: false, pagoPor: ''},
+  { id: 4,  nome: 'Cesto Roupa Bambu', valor: 94, imagem: './4.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 5,  nome: 'Geladeira', valor: 3400, imagem: './5.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 6,  nome: 'Micro-ondas', valor: 570, imagem: './6.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
+  { id: 7,  nome: 'Fogão', valor: 1350, imagem: './7.png', categoria: 'eletrodomesticos', linkpgm: '', pago: false, pagoPor: ''},
   { id: 8,  nome: 'Liquidificador', valor: 170, imagem: './8.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
   { id: 9,  nome: 'Jogo de Jantar', valor: 320, imagem: './9.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
   { id: 10, nome: 'Cafeteira Espresso', valor: 399, imagem: './10.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
