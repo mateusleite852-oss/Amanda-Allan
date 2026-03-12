@@ -1,501 +1,488 @@
-// CONFIG PIX
-let presenteSelecionado = null;
-let metodoPagamento = "pix"; // default
-const pixKey = '45806084884'; // CPF
-const recebedorPix = 'AMANDA NASCIMENTO DOS SANTOS'; // nome do recebedor
-const cidadePix = 'SAO PAULO'; // cidade do recebedor
-const whatsappNoivo = '5511986332987'; // Número do WhatsApp para contato
+<!-- --------------------LOCAL V5-------------------->
 
-// PIX (BR CODE OFICIAL)
-function gerarPixBRCode(valor) {
-  // TLV helper
-  function tlv(id, value) {
-    const len = String(value.length).padStart(2, '0');
-    return id + len + value;
-  }
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
 
-  // remove não numéricos do CPF
-  function onlyNumbers(str) {
-    return String(str).replace(/\D/g, '');
-  }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Amanda & Allan | Nosso Casamento</title>
 
-  // valor com 2 casas
-  function formatValue(v) {
-    return Number(v).toFixed(2);
-  }
+    <!-- TAILWIND -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./styles.css" />
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mea+Culpa&family=Monsieur+La+Doulaise&family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aboreto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- SCRIPT GLOBAL (showTab corrigido) -->
+    <script>
+      function showTab(id) {
+        document.querySelectorAll('.tab').forEach(tab => {
+          tab.classList.add('hidden');
+        });
 
-  // CRC16-CCITT
-  function crc16(payload) {
-    let polinomio = 0x1021;
-    let resultado = 0xffff;
+        const active = document.getElementById(id);
+        if (active) active.classList.remove('hidden');
 
-    for (let i = 0; i < payload.length; i++) {
-      resultado ^= payload.charCodeAt(i) << 8;
-      for (let j = 0; j < 8; j++) {
-        if ((resultado & 0x8000) !== 0) resultado = (resultado << 1) ^ polinomio;
-        else resultado <<= 1;
-        resultado &= 0xffff;
+        // Re-render presentes ao abrir a aba
+        if (id === 'presentes' && typeof renderPresentes === 'function') {
+          renderPresentes();
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
-    }
+    function entrarNoSite() {
+      const intro = document.getElementById("intro");
+      if (!intro) return;
 
-    return resultado.toString(16).toUpperCase().padStart(4, '0');
-  }
+      intro.style.setProperty("--swipe-progress", "1");
+      intro.classList.add("intro-exit");
+      document.body.classList.add("site-ready");
 
-  const chave = onlyNumbers(pixKey);
-  const txid = '***';
-
-  // Merchant Account Info (ID 26)
-  const gui = tlv('00', 'BR.GOV.BCB.PIX');
-  const key = tlv('01', chave);
-  const merchantAccountInfo = tlv('26', gui + key);
-
-  const payloadSemCRC =
-    '000201' +
-    merchantAccountInfo +
-    '52040000' +
-    '5303986' +
-    tlv('54', formatValue(valor)) +
-    '5802BR' +
-    tlv('59', recebedorPix) +
-    tlv('60', cidadePix) +
-    tlv('62', tlv('05', txid)) +
-    '6304';
-
-  const crc = crc16(payloadSemCRC);
-  return payloadSemCRC + crc;
-}
-
-// MODAL PIX
-function abrirModal(index) {
-  const p = presentes[index];
-  presenteSelecionado = p;
-
-  document.getElementById('modalTitulo').innerText = p.nome;
-  document.getElementById('modalValor').innerText = formatarMoeda ? formatarMoeda(p.valor) : `R$ ${p.valor},00`;
-
-  // Sempre inicia em PIX
-  trocarMetodoPagamento("pix");
-
-  // PIX
-  const payload = gerarPixBRCode(p.valor);
-  document.getElementById('pixCopia').innerText = payload;
-
-  const canvas = document.getElementById('qrcode');
-  QRCode.toCanvas(canvas, payload, { width: 220 });
-
-  // CARTAO VIA WHATSAPP
-  const btnlinkpgm = document.getElementById("btnlinkpgm");
-  if (btnlinkpgm) {
-    btnlinkpgm.href = gerarLinkWhatsappPagamento(p);
-  }
-
-  const modal = document.getElementById('modal');
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
-}
-
-function fecharModal() {
-  const modal = document.getElementById('modal');
-  modal.classList.add('hidden');
-  modal.classList.remove('flex');
-}
-
-function gerarLinkWhatsappPagamento(presente) {
-  const texto = [
-    "Olá noivos. Quero presentear vocês!",
-    `Presente: ${presente.nome}`,
-    `Valor: ${formatarMoeda(presente.valor)}`,
-    "Quero pagar no cartão de crédito. Podem me enviar o link de pagamento?"
-  ].join("\n");
-
-  return `https://wa.me/${whatsappNoivo}?text=${encodeURIComponent(texto)}`;
-}
-//Copiar código PIX
-function copiarPix() {
-  const pixEl = document.getElementById('pixCopia');
-  const btn = document.getElementById('btnCopiarPix');
-
-  if (!pixEl || !btn) return;
-
-  const pix = pixEl.innerText.trim();
-
-  navigator.clipboard.writeText(pix).then(() => {
-
-    const textoOriginal = btn.innerText;
-
-    // Remove TODAS as cores possíveis antes
-    btn.classList.remove(
-      'bg-neutral-900',
-      'hover:bg-neutral-800',
-      'active:bg-neutral-900',
-      'focus:bg-neutral-900'
-    );
-
-    // Força verde
-    btn.classList.add('bg-green-600');
-
-    // Força inline (mobile respeita sempre)
-    btn.style.backgroundColor = '#16a34a';
-
-    btn.innerText = '✔️ PIX copiado';
-    btn.disabled = true;
-
-    if (navigator.vibrate) {
-      navigator.vibrate(80);
-    }
-
-    setTimeout(() => {
-
-      if (!document.body.contains(btn)) return;
-
-      btn.innerText = textoOriginal;
-
-      btn.classList.remove('bg-green-600');
-      btn.classList.add('bg-neutral-900');
-
-      // Remove força inline
-      btn.style.backgroundColor = '';
-
-      btn.disabled = false;
-
-    }, 3000);
-
-  });
-}
-
-// Fecha modal PIX ao clicar fora
-function initModalClose() {
-  const modal = document.getElementById('modal');
-  if (!modal) return;
-
-  modal.addEventListener('click', (e) => {
-    if (e.target.id === 'modal') fecharModal();
-  });
-}
-
-//pix ou crédito
-function trocarMetodoPagamento(metodo) {
-  metodoPagamento = metodo;
-
-  const areaPix = document.getElementById("areaPix");
-  const areaCredito = document.getElementById("areaCredito");
-
-  const btnPix = document.getElementById("btnTabPix");
-  const btnCredito = document.getElementById("btnTabCredito");
-
-  if (metodo === "pix") {
-    areaPix.classList.remove("hidden");
-    areaCredito.classList.add("hidden");
-
-    btnPix.classList.add("bg-white", "shadow");
-    btnPix.classList.remove("text-neutral-600");
-
-    btnCredito.classList.remove("bg-white", "shadow");
-    btnCredito.classList.add("text-neutral-600");
-  } else {
-    areaPix.classList.add("hidden");
-    areaCredito.classList.remove("hidden");
-
-    btnCredito.classList.add("bg-white", "shadow");
-    btnCredito.classList.remove("text-neutral-600");
-
-    btnPix.classList.remove("bg-white", "shadow");
-    btnPix.classList.add("text-neutral-600");
-  }
-}
-
-// lISTA DE PRESENTES
-const presentes = [
-  { id: 1,  nome: 'Jogo de Panelas', valor: 260, imagem: './1.png', categoria: 'cozinha', linkpgm: '#',pago: false, pagoPor: ''},
-  { id: 2,  nome: 'Lava e Seca', valor: 3060, imagem: './2.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 3,  nome: 'Aspirador', valor: 170, imagem: './3.png', categoria: 'eletrodomesticos', linkpgm: '#',pago: false, pagoPor: ''},
-  { id: 4,  nome: 'Cesto Roupa Bambu', valor: 94, imagem: './4.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 5,  nome: 'Geladeira', valor: 3400, imagem: './5.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 6,  nome: 'Micro-ondas', valor: 570, imagem: './6.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 7,  nome: 'Fogão', valor: 1350, imagem: './7.png', categoria: 'eletrodomesticos', linkpgm: '', pago: false, pagoPor: ''},
-  { id: 8,  nome: 'Liquidificador', valor: 170, imagem: './8.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 9,  nome: 'Jogo de Jantar', valor: 320, imagem: './9.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 10, nome: 'Cafeteira Espresso', valor: 399, imagem: './10.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 11, nome: 'Faqueiro', valor: 93, imagem: './11.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 12, nome: 'Sanduicheira', valor: 260, imagem: './12.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 13, nome: 'Jogo de Facas', valor: 120, imagem: './13.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 14, nome: 'Pipoqueira Elétrica', valor: 160, imagem: './14.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 15, nome: 'Jogo de copos', valor: 139, imagem: './15.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 16, nome: 'Ferro a Vapor', valor: 256, imagem: './16.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 17, nome: 'Smart TV Philips 58"', valor: 2564, imagem: './17.png', categoria: 'eletronicos', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 18, nome: 'Armário de Cozinha Compacta', valor: 598, imagem: './18.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 19, nome: 'Rack + Painel para TV', valor: 500, imagem: './19.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 20, nome: 'Robô Aspirador', valor: 288, imagem: './20.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 21, nome: 'Air Fryer', valor: 399, imagem: './21.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 22, nome: 'Depurador/Exaustor', valor: 512, imagem: './22.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 23, nome: 'Cama Box Casal', valor: 949, imagem: './23.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 24, nome: 'Guarda-roupa Casal', valor: 1269, imagem: './24.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 25, nome: 'Jogo de Cama Queen', valor: 158, imagem: './25.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 26, nome: 'Jogo de Toalhas', valor: 185, imagem: './26.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 27, nome: 'Kit Travesseiros ', valor: 177, imagem: './27.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 28, nome: 'Kit Potes Herméticos', valor: 176, imagem: './28.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 29, nome: 'Sofá com USB', valor: 1433, imagem: './29.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 30, nome: 'Batedeira Portátil', valor: 113, imagem: './30.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 31, nome: 'Ventilador de Mesa', valor: 124, imagem: './31.png', categoria: 'eletrodomesticos', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 32, nome: 'Kit Churrasco', valor: 169, imagem: './32.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 33, nome: 'Tábua de Passar', valor: 129, imagem: './33.png', categoria: 'lavanderia', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 34, nome: 'Kit Potes de Vidro', valor: 125, imagem: './34.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 35, nome: 'Kit Sobremesa', valor: 159, imagem: './35.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 36, nome: 'Kit Pratos Sobremesa', valor: 271, imagem: './36.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 37, nome: 'Garrafa Térmica Inox', valor: 110, imagem: './37.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 38, nome: 'Kit Organizadores Geladeira', valor: 189, imagem: './38.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 39, nome: 'Kit Utensílios Silicone', valor: 128, imagem: './39.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 40, nome: 'Echo Dot  - Alexia', valor: 568, imagem: './40.png', categoria: 'eletronicos', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 41, nome: 'Cabeceira Casal/Queen', valor: 440, imagem: './41.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 42, nome: 'Espelho Orgânico Grande', valor: 98, imagem: './42.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 43, nome: 'Suporte para Especiarias', valor: 199, imagem: './43.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 44, nome: 'Quadros Decorativos', valor: 129, imagem: './44.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 45, nome: 'Tapete Felpudo', valor: 99, imagem: './45.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 46, nome: 'Kit Capas de Almofadas', valor: 68, imagem: './46.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 47, nome: 'Cortina Blackout', valor: 134, imagem: './47.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 48, nome: 'Jogo Tapete Cozinha', valor: 142, imagem: './48.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 49, nome: 'Tapete Banho', valor: 142, imagem: './49.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 50, nome: 'Multiprocessador Elétrico', valor: 119, imagem: './50.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 51, nome: 'Espremedor de Frutas', valor: 93, imagem: './51.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 52, nome: 'Kit Porta-retratos', valor: 120, imagem: './52.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 53, nome: 'Aparador Bar com Adega', valor: 294, imagem: './53.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 54, nome: 'Kit Petisqueiras', valor: 132, imagem: './54.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 55, nome: 'Colcha Casal', valor: 105, imagem: './55.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 56, nome: 'Arara Dupla Closet', valor: 120, imagem: './56.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 57, nome: 'Luminária de Mesa Articulável', valor: 92, imagem: './57.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 58, nome: 'Mesa de Jantar Oval', valor: 577, imagem: './58.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 59, nome: 'Panela de Arroz Elétrica', valor: 130, imagem: './59.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 60, nome: 'Kit Travessas LE CHEF', valor: 75, imagem: './60.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 61, nome: 'Kit Tigelas', valor: 115, imagem: './61.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 62, nome: 'Kit Banheiro', valor: 140, imagem: './62.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 63, nome: 'Kit Travessas Ferro Fundido', valor: 173, imagem: './63.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 64, nome: 'Bandeja de Café com Alças', valor: 126, imagem: './64.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 65, nome: 'Kit Taças Vinho', valor: 126, imagem: './65.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 66, nome: 'Boleira Bambu', valor: 110, imagem: './66.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 67, nome: 'Mesa de Centro Oval', valor: 228, imagem: './67.png', categoria: 'moveis', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 68, nome: 'Porta-temperos Giratório 20 Potes', valor: 119, imagem: './68.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 69, nome: 'Jarra + copos', valor: 107, imagem: './69.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 70, nome: 'Jogo Formas Retangulares', valor: 105, imagem: './70.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 71, nome: 'Kit Formas Redondas', valor: 94, imagem: './71.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 72, nome: 'Kit Vasos para Planta', valor: 148, imagem: './72.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 73, nome: 'Cortina Cozinha', valor: 60, imagem: './73.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 74, nome: 'Jogo Americano', valor: 73, imagem: './74.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 75, nome: 'Suporte Papel Toalha', valor: 100, imagem: './75.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 76, nome: 'Escorredor Suspenso', valor: 130, imagem: './76.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  //repetido. { id:  77, nome: 'Kit Utensílios 7 Peças', valor: 55, imagem: './77.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 78, nome: 'Kit Dispenser', valor: 74, imagem: './78.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 79, nome: 'Lixeira Inox', valor: 100, imagem: './79.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 80, nome: 'Kit Toalhas de Mesa', valor: 113, imagem: './80.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 81, nome: 'Protetor de Sofá', valor: 145, imagem: './81.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 82, nome: 'Manta para Sofá', valor: 48, imagem: './82.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  //repetido. { id: 83, nome: 'Capa Protetora Sofá', valor: 152, imagem: './83.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 84, nome: 'Edredom Queen', valor: 233, imagem: './84.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 85, nome: 'Varal de Chão', valor: 89, imagem: './85.png', categoria: 'lavanderia', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 86, nome: 'Jogo Xícaras', valor: 189, imagem: './86.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 87, nome: 'Ar-condicionado', valor: 3199, imagem: './87.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 88, nome: 'Whisky Royal Salute 21 anos', valor: 899, imagem: './88.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 89, nome: 'Kit Canecas', valor: 113, imagem: './89.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 90, nome: 'Kit Canecas Vidro', valor: 193, imagem: './90.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 91, nome: 'Purificador de Água', valor: 499, imagem: './91.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  //repetido. { id: 92, nome: 'Jogo de Cama Queen', valor: 279, imagem: './92.png', categoria: 'quarto', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 93, nome: 'Soundbar / Home Theater', valor: 369, imagem: './93.png', categoria: 'casa', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 94, nome: 'Panela de Pressão', valor: 220, imagem: './94.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 95, nome: 'Kit Potes com Trava', valor: 160, imagem: './95.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 96, nome: 'Kit Limpeza', valor: 114, imagem: './96.png', categoria: 'limpeza', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 97, nome: 'Mesa Bistrô + Banquetas', valor: 754, imagem: './97.png', categoria: 'cozinha', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 98, nome: 'Vale ingresso de show', valor: 300, imagem: './98.png', categoria: 'outros', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 99, nome: 'Vale restaurante romântico', valor: 250, imagem: './99.png', categoria: 'outros', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 100, nome: 'Vale dia de Spar casal', valor: 350, imagem: './100.png', categoria: 'outros', linkpgm: '#', pago: false, pagoPor: ''},
-  { id: 101, nome: 'Vale passagem aérea', valor: 200, imagem: './101.png', categoria: 'outros', linkpgm: '#', pago: false, pagoPor: ''},
-];
-
-// FILTROS - LISTA DE PRESENTES
-let filtros = {
-  valor: 'all',
-  categoria: 'all',
-  busca: '',
-  especial: 'all'
-}
-function formatarMoeda(valor) {
-  return Number(valor).toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  });
-}
-function normalizarTexto(str) {
-  return String(str)
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '');
-}
-function aplicarFiltros(lista) {
-  let filtrados = [...lista];
-
-  // faixa de preço
-  if (filtros.valor !== 'all') {
-    const maximo = Number(filtros.valor);
-    filtrados = filtrados.filter(p => Number(p.valor) >= maximo);
-  }
-
-  // categoria
-  if (filtros.categoria !== 'all') {
-    filtrados = filtrados.filter(p => (p.categoria || 'outros') === filtros.categoria);
-  }
-
-  // busca
-  if (String(filtros.busca).trim() !== '') {
-    const q = normalizarTexto(filtros.busca.trim());
-    filtrados = filtrados.filter(p => normalizarTexto(p.nome).includes(q));
-  }
-// mais caro / mais barato - Obsoleto - Mudei de ideia
-//if (filtros.especial !== 'all' && filtrados.length > 0) {
-//  if (filtros.especial === 'mais-barato') {
-//    const menor = Math.min(...filtrados.map(p => Number(p.valor)));
-//    filtrados = filtrados.filter(p => Number(p.valor) === menor);
-//}
-//
-//  if (filtros.especial === 'mais-caro') {
-//    const maior = Math.max(...filtrados.map(p => Number(p.valor)));
-//   filtrados = filtrados.filter(p => Number(p.valor) === maior);
-//  }
-//}
-
-// ordenação por valor
-if (filtros.especial !== 'all') {
-  if (filtros.especial === 'mais-barato') {
-    filtrados.sort((a, b) => Number(a.valor) - Number(b.valor));
-  }
-
-  if (filtros.especial === 'mais-caro') {
-    filtrados.sort((a, b) => Number(b.valor) - Number(a.valor));
-  }
-}
-  return filtrados;
-}
-
-// PRESENTES (com filtros)
-function renderPresentes() {
-  const lista = document.getElementById('lista-presentes');
-  const contador = document.getElementById('contadorPresentes');
-  if (!lista) return;
-
-  const filtrados = aplicarFiltros(presentes);
-  lista.innerHTML = '';
-
-  filtrados.forEach((p) => {
-    const isPago = p.pago === true; // marca presente como pago
-    const card = document.createElement('div');
-    card.className = `
-    bg-white
-    overflow-hidden
-    border border-neutral-200
-    rounded-md
-    transition
-    active:scale-[0.98]
-  `;
-
-  card.innerHTML = `<!-- IMAGEM -->
-  <div class="w-full aspect-square bg-white flex items-center justify-center">
-    <img 
-      src="${p.imagem}"
-      alt="${p.nome}"
-      class="w-full h-full object-contain p-1"
-      loading="lazy"
-    />
-  </div>
-  <!-- INFO -->
-  <div class="px-2 py-2 text-left">
-
-    <h3 class="text-xs leading-tight line-clamp-2 text-neutral-800 mb-1">
-      ${p.nome}
-    </h3>
-    ${
-      isPago
-      ? `<p class="text-[11px] text-green-600 font-medium">
-          💚 ${p.pagoPor}
-        </p>`
-      : `<p class="text-sm font-bold text-green-700">
-          ${formatarMoeda(p.valor)}
-        </p>`
-    }
-
-  </div>
-`;
-
-  if (!isPago) {
-    card.addEventListener('click', () => {
-      const idxOriginal = presentes.findIndex(x => x.id === p.id);
-      abrirModal(idxOriginal);
-    });
-  }
-
-  lista.appendChild(card);
-});
-
-//ajustarImagensCards(); sem utilidade
-
-if (contador) {
-    contador.innerText = `${filtrados.length}, presente(s) encontrado(s)`;
-  }
-
-  setTimeout(() => {
-    ajustarTamanhoCards();
-  }, 50);
-}
-function ajustarImagensCards() {
-  const imgs = document.querySelectorAll('#lista-presentes img[data-fit="auto"]');
-
-  imgs.forEach(img => {
-    img.onload = () => {
-      const ratio = img.naturalWidth / img.naturalHeight;
-
-      // muito horizontal -> contain
-      if (ratio > 1.35) {
-        img.classList.remove('object-cover');
-        img.classList.add('object-contain', 'p-3');
-      } else {
-        img.classList.remove('object-contain', 'p-3');
-        img.classList.add('object-cover');
+      if (navigator.vibrate && window.innerWidth < 768) {
+        navigator.vibrate(40);
       }
-    };
 
-    if (img.complete) img.onload();
-  });
-}
-function initFiltrosPresentes() {
-  const filtrovalor = document.getElementById('filtrovalor'); // campo valor
-  const filtroEspecial = document.getElementById('filtroEspecial'); //mais caro / mais barato
-  const filtroCategoria = document.getElementById('filtroCategoria'); // campo categoria
-  const filtroBusca = document.getElementById('filtroBusca'); // campo text busca
-  const btnLimpar = document.getElementById('btnLimparFiltros'); // botão limpar
+      setTimeout(() => {
+        intro.style.display = "none";
+        document.body.classList.remove("overflow-hidden");
+      }, 850);
+    }
 
-  if (!filtrovalor || !filtroCategoria || !filtroBusca || !btnLimpar) return; // validação
+    function initIntroSwipe() {
+      const intro = document.getElementById("intro");
+      if (!intro) return;
 
-// eventos de busca
-  filtrovalor.addEventListener('change', (e) => {
-    filtros.valor = e.target.value;
-    renderPresentes();
-  });
-  if (filtroEspecial) {
-    filtroEspecial.addEventListener('change', (e) => {
-      filtros.especial = e.target.value;
-      renderPresentes();
+      const threshold = 95;
+      let startY = 0;
+      let deltaY = 0;
+      let dragging = false;
+
+      function setProgress(currentDelta) {
+        const upDistance = Math.max(0, -currentDelta);
+        const progress = Math.min(upDistance / threshold, 1);
+        intro.style.setProperty("--swipe-progress", progress.toString());
+      }
+
+      function onStart(clientY) {
+        if (document.body.classList.contains("site-ready")) return;
+        dragging = true;
+        startY = clientY;
+        deltaY = 0;
+        intro.classList.add("is-dragging");
+      }
+
+      function onMove(clientY) {
+        if (!dragging) return;
+        deltaY = clientY - startY;
+        setProgress(deltaY);
+      }
+
+      function onEnd() {
+        if (!dragging) return;
+        dragging = false;
+        intro.classList.remove("is-dragging");
+
+        if (-deltaY >= threshold) {
+          entrarNoSite();
+          return;
+        }
+
+        intro.style.setProperty("--swipe-progress", "0");
+      }
+
+      intro.addEventListener("touchstart", (e) => {
+        onStart(e.touches[0].clientY);
+      }, { passive: true });
+
+      intro.addEventListener("touchmove", (e) => {
+        onMove(e.touches[0].clientY);
+        if (dragging) e.preventDefault();
+      }, { passive: false });
+
+      intro.addEventListener("touchend", onEnd);
+      intro.addEventListener("touchcancel", onEnd);
+
+      intro.addEventListener("mousedown", (e) => {
+        if (e.button !== 0) return;
+        onStart(e.clientY);
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        onMove(e.clientY);
+      });
+
+      window.addEventListener("mouseup", onEnd);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      showTab('home');
+      initIntroSwipe();
+
+      if (typeof renderPresentes === 'function') {
+        renderPresentes();
+      }
     });
-  }
-  filtroCategoria.addEventListener('change', (e) => {
-    filtros.categoria = e.target.value;
-    renderPresentes();
-  });
-  filtroBusca.addEventListener('input', (e) => {
-    filtros.busca = e.target.value;
-    renderPresentes();
-  });
-  btnLimpar.addEventListener('click', () => {
-    filtros = { valor: 'all', categoria:  'all', busca: '', especial: 'all' };
-    filtrovalor.value = 'all';
-    filtroCategoria.value = 'all';
-    filtroBusca.value = '';
-    filtroEspecial.value = 'all';
-    renderPresentes();
-  });
-}
+    </script>
+  </head>
+
+  <body class="bg-[#f7f5f2] text-neutral-800 overflow-hidden">
+    <!-- INTRO MICROEXPERIENCIA -->
+    <div id="intro" class="fixed inset-0 z-[999] flex items-center justify-center px-4 py-6 sm:py-10 bg-[radial-gradient(circle_at_top,#f9f6f2_0%,#ece3d7_60%,#e4d6c3_100%)] overflow-hidden">
+      <div class="intro-stage w-full max-w-[980px]">
+        <div class="intro-card relative rounded-[28px] overflow-hidden border border-[#e8dccf] shadow-2xl">
+          <img
+            src="./intro.jpeg"
+            alt="Amanda e Allan"
+            class="intro-photo w-full max-h-[72vh] sm:max-h-[80vh] object-contain bg-[#f7f3ed]"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/35 via-black/5 to-transparent">
+          </div>
+        </div>
+              <div class="intro-hint text-center select-none mb-3 sm:mb-4 p-8">
+          <p class="text-[#6e4d46] text-[11px] sm:text-xs tracking-[0.16em] uppercase">Deslize para abrir</p>
+          <span class="intro-hint-bar" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAV -->
+    <nav class="site-shell bg-white shadow fixed w-full z-10">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-center items-center">
+        <div class="space-x-6 text-sm justify-center">
+          <button onclick="showTab('home')" class="hover:opacity-70 transition">Home</button>
+          <button onclick="showTab('presentes')" id="btnNavPresentes" class="hover:opacity-70 transition">Presentes</button>
+          <button onclick="showTab('confirma-presenca')" id="btnNavconfirma" class="hover:opacity-70 transition">Confirmar presença</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="site-shell pt-24 w-full max-w-full  sm:max-w-6xl xl:max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+      <!-- HOME -->
+      <section id="home" class="tab">
+        <div class="relative bg-white rounded-xl sm:rounded-3xl shadow overflow-hidden mb-20">
+          <div class="h-[55vh] sm:h-[650px]">
+            <img
+              src="./home.png"
+              alt="Foto home"
+              class="w-full h-[55vh] sm:h-[650px] object-cover rounded-xl sm:rounded-3xl"
+            />
+            <div class="absolute inset-0 bg-black/20" ></div>
+          </div>
+
+          <!-- TEXTO CENTRAL -->
+          <div class="absolute inset-0 flex flex-col items-center justify-end pb-5">
+            <div class="text-center text-white max-w-3xl px-4">
+
+              <h1 class="text-4xl sm:text-8xl mb-8 monsieur-la-doulaise-regular">Amanda & Allan</h1>
+
+              <p class="text-sm sm:text-xl mb-8">
+                Estamos muito felizes em dividir esse momento com você
+              </p>
+
+            </div>
+          </div>
+        </div>
+        <!-- TIMELINE CARROSSEL -->
+        <section class="mb-24">
+
+          <div class="text-center mb-10">
+            <p class="uppercase tracking-[0.25em] text-xs text-neutral-500 mb-2">Nossa História</p>
+            <h2 class="text-2xl home_moment">Momentos Especiais</h2>
+          </div>
+
+          <!-- Wrapper -->
+          <div class="relative overflow-hidden">
+
+            <!-- Botão Esquerda -->
+            <button id="prev"
+              class="hidden sm:flex absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 shadow rounded-full w-10 h-10 items-center justify-center hover:bg-[#e7dccf]-[#e7dccf] transition">
+              ◀
+            </button>
+
+            <!-- Botão Direita -->
+            <button id="next"
+              class="hidden sm:flex absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/90 shadow rounded-full w-10 h-10 items-center justify-center hover:bg-[#e7dccf]-[#e7dccf] transition">
+              ▶
+            </button>
+
+            <!-- Carrossel -->
+            <div id="carousel" class="relative h-[420px]">
+
+              <!-- Slide 1 -->
+              <div class="fade-slide active absolute inset-0 flex items-center justify-center px-2">
+                <div class="w-full bg-[#fffdf9]/90 backdrop-blur rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center border border-[#e7dccf]">
+                  <img src="./l1.jpg" class="w-full sm:w-1/2 h-64 object-cover rounded-2xl" />
+                  <div class="text-center sm:text-left">
+                    <p class="text-xs text-neutral-500">05/2025</p>
+                    <h3 class="text-xl font-semibold mb-2">Quando nos conhecemos</h3>
+                    <p class="text-neutral-600">Sem saber que estaríamos ligados para o resto da vida.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 2 -->
+              <div class="fade-slide absolute inset-0 flex items-center justify-center px-2">
+                <div class="w-full bg-[#fffdf9]/90 backdrop-blur rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center border border-[#e7dccf]">
+                  <img src="./l2.jpeg" class="w-full sm:w-1/2 h-64 object-cover rounded-2xl" />
+                  <div class="text-center sm:text-left">
+                    <p class="text-xs text-neutral-500">11/2022</p>
+                    <h3 class="text-xl font-semibold mb-2">Pedido de namoro</h3>
+                    <p class="text-neutral-600">Momento mágico de nossas vidas.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Slide 3 -->
+              <div class="fade-slide absolute inset-0 flex items-center justify-center px-2">
+                <div class="w-full bg-[#fffdf9]/90 backdrop-blur rounded-3xl shadow-xl p-6 sm:p-8 flex flex-col sm:flex-row gap-6 items-center border border-[#e7dccf]">
+                  <img src="./l3.jpg" class="w-full sm:w-1/2 h-64 object-cover rounded-2xl" />
+                  <div class="text-center sm:text-left">
+                    <p class="text-xs text-neutral-500">12/2025</p>
+                    <h3 class="text-xl font-semibold mb-2">Pedido de casamento</h3>
+                    <p class="text-neutral-600">Novo começo.</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        <!-- O GRANDE DIA -->
+        <section class="bg-white rounded-3xl shadow p-6 sm:p-12 mb-20 text-center">
+
+          <h2 class="text-2xl sm:text-1xl home_grande_dia mb-6">O grande dia está chegando</h2>
+
+          <p class="text-base sm:text-lg mb-8 text-neutral-600">
+            Alameda Sol Nascente, 10 · Mairiporã
+          </p>
+
+          <!-- CONTADOR -->
+          <div class="grid grid-cols-4 sm:grid-cols-4 gap-4 max-w-3xl mx-auto mb-8">
+            <div class="bg-neutral-100 rounded-2xl p-4 sm:p-6">
+              <p id="dias" class="text-2xl sm:text-3xl font-semibold">0</p>
+              <p class="uppercase text-xs sm:text-sm mt-2">Dias</p>
+            </div>
+            <div class="bg-neutral-100 rounded-2xl p-4 sm:p-6">
+              <p id="horas" class="text-2xl sm:text-3xl font-semibold">0</p>
+              <p class="uppercase text-xs sm:text-sm mt-2">Horas</p>
+            </div>
+            <div class="bg-neutral-100 rounded-2xl p-4 sm:p-6">
+              <p id="minutos" class="text-2xl sm:text-3xl font-semibold">0</p>
+              <p class="uppercase text-xs sm:text-sm mt-2">Min</p>
+            </div>
+            <div class="bg-neutral-100 rounded-2xl p-4 sm:p-6">
+              <p id="segundos" class="text-2xl sm:text-3xl font-semibold">0</p>
+              <p class="uppercase text-xs sm:text-sm mt-2">Seg</p>
+            </div>
+          </div>
+
+          <!-- INFO EVENTO -->
+          <div class="grid grid-cols-3 sm:grid-cols-3 gap-4 bg-neutral-50 rounded-3xl px-6 py-5 max-w-3xl mx-auto">
+
+            <div>
+              <p class="text-xs uppercase">Data</p>
+              <p class="font-medium">19/12/2026</p>
+            </div>
+
+            <div>
+              <p class="text-xs uppercase">Horário</p>
+              <p class="font-medium">16:00</p>
+            </div>
+
+            <div>
+              <p class="text-xs uppercase">Local</p>
+              <a
+                href="https://maps.app.goo.gl/n4UxF4D5MTXChnyx9"
+                target="_blank"
+                class="inline-block mt-2 text-xs bg-neutral-900 text-white px-4 py-2 rounded-full hover:bg-neutral-700 transition"
+              >
+                Como chegar
+              </a>
+            </div>
+
+          </div>
+
+        </section>
+      </section>
+
+      <!-- ABA PRESENTES -->
+      <section id="presentes" class="tab hidden bg-gradient-to-br from-[#f0e6da] to-[#f7f3ee] rounded-3xl shadow p-3 sm:p-10 mb-16">
+        <div class="mb-10 text-center">
+          <!-- Título -->
+          <h2 class="presentes-font text-3xl tracking-tight mb-3 items-center justify-center gap-2">
+            Nossa Lista de Presentes
+          </h2>
+          <!-- Botões -->
+          <div class="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
+            <!-- Ranking -->
+            <button
+              onclick="abrirRanking()"
+              class="px-5 py-2.5 rounded-full border border-[#c9b79c] text-[#7a6549] bg-white text-sm
+                font-medium hover:bg-[#f5efe7] transition">
+                Apoiadores
+            </button>
+            <!-- CTA -->
+            <a href="#lista-presentes" class=" px-6 py-2.5 rounded-full bg-[#c9b79c] text-white text-sm font-semibold
+                hover:opacity-90 transition shadow-sm ">
+              Escolher presente
+            </a>
+          </div>
+        </div>
+        <!-- FILTROS -->
+        <div class="bg-neutral-50 border border-neutral-200 rounded-3xl p-4 sm:p-6 mb-10">
+          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <div>
+              <label class="text-xs uppercase tracking-widest text-neutral-500"><b>Faixa de preço</b></label>
+              <select id="filtrovalor" class="select-premium">
+                <option value="all">Todos</option>
+                <option value="48">A partir de R$48</option>
+                <option value="100">A partir de R$100</option>
+                <option value="500">A partir de R$500</option>
+                <option value="800">A partir de R$800</option>
+                <option value="1000">A partir de R$1000</option> 
+                <option value="2000">A partir de R$2000</option>
+                <option value="3000">A partir de R$3000</option>
+                <option value="3400">A partir de R$3400</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs uppercase tracking-widest text-neutral-500"><b>Ordenação</b></label>
+              <select id="filtroEspecial" class="select-premium">
+                <option value="all">Todos</option>
+                <option value="mais-barato">Menor preço</option>
+                <option value="mais-caro">Maior preço</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs uppercase tracking-widest text-neutral-500"><b>Categoria</b></label>
+              <select id="filtroCategoria" class="select-premium">
+                <option value="all">Todas</option>
+                <option value="casa">Casa</option>
+                <option value="cozinha">Cozinha</option>
+                <option value="eletrodomesticos">Eletrodomesticos</option>
+                <option value="eletronicos">Eletrônicos</option>
+                <option value="lavanderia">Lavanderia</option>
+                <option value="moveis">Móveis</option>
+                <option value="quarto">Quarto</option>
+                <option value="outros">Outros</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs uppercase tracking-widest text-neutral-500"><b>Buscar</b></label>
+              <input id="filtroBusca" placeholder="Ex: jantar, spa, geladeira..." class="filtros-buscar input-premium" />
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
+            <p id="contadorPresentes" class="text-sm text-neutral-600"></p>
+            <button id="btnLimparFiltros" class="text-sm underline hover:opacity-70 transition">Limpar filtros</button>
+          </div>
+        </div>
+        <div   class="sm:max-h-[70vh] overflow-y-auto pr-2"><!-- limita o scroll PC apenas-->
+          <div id="lista-presentes" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-4"></div>
+        </div>
+      </section>
+
+      <!-- ABA LISTA DE PRESENÇA -->
+      <section id="confirma-presenca" class="tab hidden bg-gradient-to-br from-[#f0e6da] to-[#f7f3ee] rounded-3xl shadow p-3 sm:p-10 mb-16">
+        <div class="mb-10 text-center">
+          <!-- Título -->
+          <h2 class="presentes-font text-3xl tracking-tight mb-3 items-center justify-center gap-2">
+            Confirme sua presença
+          </h2>
+          <div class="items-center justify-center p-4"> 
+            <p class="text-neutral-600">Precisamos que confirme sua presença no nosso casamento o quanto antes.</p>
+          </div>
+          <div class="max-w-md mx-auto mt-8">
+            <form>
+              <select name="presenca" id="presenca" class="select-premium w-full mb-4" required>
+                <option value="true" selected>Estou confirmado(a)!</option>
+                <option value="false">Infelizmente, não poderei comparecer.</option>
+              </select>
+              <input type="text" name="nome" id="nomeform" placeholder="Nome do convidado principal" class="input-premium w-full mb-4" required />
+              <input type="number" name="qtdpessoas" id="qtdpessoas" placeholder="N° de acompanhantes, se houver" class="input-premium w-full mb-4" required />
+              <button type="button" onclick="const link = confirmarPresenca(); if (link) window.open(link, '_blank');"
+                class="bg-[#c9b79c] text-white py-3 px-4 rounded-lg hover:opacity-90 transition font-semibold w-full">
+                Enviar aos noivos
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- MODAL PIX / CRÉDITO -->
+      <div id="modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full text-center shadow-2xl relative">
+          <button onclick="fecharModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 transition flex items-center justify-center">
+            ✕
+          </button>
+          <h3 id="modalTitulo" class="text-2xl font-semibold mb-2"></h3>
+          <p id="modalValor" class="text-neutral-600 mb-6"></p>
+          <div class="flex bg-neutral-100 rounded-2xl p-1 mb-6">
+            <button id="btnTabPix"
+              class="flex-1 py-2 rounded-2xl text-sm font-semibold transition bg-white shadow"
+              onclick="trocarMetodoPagamento('pix')">PIX</button>
+            <button id="btnTabCredito"
+              class="flex-1 py-2 rounded-2xl text-sm font-semibold transition text-neutral-600 hover:text-neutral-900"
+              onclick="trocarMetodoPagamento('credito')">CARTÃO</button>
+          </div>
+        <div id="areaPix">
+          <canvas id="qrcode" class="mx-auto mb-4"></canvas>
+          <div id="pixCopia" class="bg-neutral-100 rounded-2xl p-3 text-sm break-all text-neutral-700"></div>
+          <button id="btnCopiarPix" onclick="copiarPix()"
+            class="mt-4 w-full bg-[#c9b79c] text-white py-3 rounded-2xl hover:bg-neutral-800 transition font-semibold">
+            Copiar código PIX
+          </button>
+          <p class="text-xs text-neutral-500 mt-4">Escaneie o QR Code ou copie o código.</p>
+        </div>
+        <div id="areaCredito" class="hidden">
+          <div class="bg-[#fbf7f2] border border-[#e9dfd4] rounded-2xl p-5 text-left mb-6">
+            <p class="text-sm text-neutral-700 font-semibold mb-1">Deseja presentar utilizando cartão de crédito?</p>
+            <p class="text-sm text-neutral-600">Fale com um dos noivos para receber o link de pagamento</p>
+          </div>
+          <a id="btnlinkpgm"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-full inline-block bg-[#c9b79c] text-white text-center py-3 rounded-2xl hover:opacity-90 transition font-semibold">Falar no WhatsApp</a>
+        </div>
+        </div>
+      </div>
+
+      <!-- MODAL RANKING -->
+      <div id="modalRanking" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full relative">
+          <button onclick="fecharRanking()"
+            class="absolute top-4 right-4 text-neutral-500 hover:text-neutral-800">
+            ✕
+          </button>
+          <h3 class="raking-font p-3 mb-2 text-center">Ranking de Presentes</h3>
+          <div id="listaRanking"
+            class="max-h-[360px] overflow-y-auto space-y-3 pr-2"></div>
+          <button onclick="fecharRanking()"
+            class="mt-6 w-full bg-neutral-900 text-white py-2 rounded-lg">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- SCRIPT JS -->
+    <script src="./abas.js"></script>
+    <script src="./apoiadores.js"></script>
+    <script src="./carrossel.js"></script>
+    <script src="./contador.js"></script>
+    <script src="./inicializa.js"></script>
+    <script src="./presentes_git.js"></script>
+  </body>
+</html>
