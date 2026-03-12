@@ -1,4 +1,4 @@
-<!-- --------------------LOCAL V6-------------------->
+<!-- --------------------LOCAL V5-------------------->
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -136,7 +136,7 @@
   </head>
 
   <body class="bg-[#f7f5f2] text-neutral-800 overflow-hidden">
-   <!-- INTRO MICROEXPERIENCIA -->
+    <!-- INTRO MICROEXPERIENCIA -->
     <div id="intro" class="fixed inset-0 z-[999] flex items-center justify-center px-4 py-6 sm:py-10 bg-[radial-gradient(circle_at_top,#f9f6f2_0%,#ece3d7_60%,#e4d6c3_100%)] overflow-hidden">
       <div class="intro-stage w-full max-w-[980px]">
         <div class="intro-card relative rounded-[28px] overflow-hidden border border-[#e8dccf] shadow-2xl">
@@ -156,13 +156,11 @@
 
     <!-- NAV -->
     <nav class="site-shell bg-white shadow fixed w-full z-10">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-        <button onclick="showTab('home')" class="hover:opacity-70 transition">
-          <span class="font-semibold text-lg">Amanda & Allan</span>
-        </button>
-        <div class="space-x-6 text-sm">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex justify-center items-center">
+        <div class="space-x-6 text-sm justify-center">
           <button onclick="showTab('home')" class="hover:opacity-70 transition">Home</button>
           <button onclick="showTab('presentes')" id="btnNavPresentes" class="hover:opacity-70 transition">Presentes</button>
+          <button onclick="showTab('confirma-presenca')" id="btnNavconfirma" class="hover:opacity-70 transition">Confirmar presença</button>
         </div>
       </div>
     </nav>
@@ -395,6 +393,33 @@
         </div>
       </section>
 
+      <!-- ABA LISTA DE PRESENÇA -->
+      <section id="confirma-presenca" class="tab hidden bg-gradient-to-br from-[#f0e6da] to-[#f7f3ee] rounded-3xl shadow p-3 sm:p-10 mb-16">
+        <div class="mb-10 text-center">
+          <!-- Título -->
+          <h2 class="presentes-font text-3xl tracking-tight mb-3 items-center justify-center gap-2">
+            Confirme sua presença
+          </h2>
+          <div class="items-center justify-center p-4"> 
+            <p class="text-neutral-600">Precisamos que confirme sua presença no nosso casamento o quanto antes.</p>
+          </div>
+          <div class="max-w-md mx-auto mt-8">
+            <form>
+              <select name="presenca" id="presenca" class="select-premium w-full mb-4" required>
+                <option value="true" selected>Estou confirmado(a)!</option>
+                <option value="false">Infelizmente, não poderei comparecer.</option>
+              </select>
+              <input type="text" name="nome" id="nomeform" placeholder="Nome do convidado principal" class="input-premium w-full mb-4" required />
+              <input type="number" name="qtdpessoas" id="qtdpessoas" placeholder="N° de acompanhantes, se houver" class="input-premium w-full mb-4" required />
+              <button type="button" onclick="const link = confirmarPresenca(); if (link) window.open(link, '_blank');"
+                class="bg-[#c9b79c] text-white py-3 px-4 rounded-lg hover:opacity-90 transition font-semibold w-full">
+                Enviar aos noivos
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
       <!-- MODAL PIX / CRÉDITO -->
       <div id="modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center p-4 z-50">
         <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full text-center shadow-2xl relative">
@@ -415,7 +440,7 @@
           <canvas id="qrcode" class="mx-auto mb-4"></canvas>
           <div id="pixCopia" class="bg-neutral-100 rounded-2xl p-3 text-sm break-all text-neutral-700"></div>
           <button id="btnCopiarPix" onclick="copiarPix()"
-            class="mt-4 w-full bg-neutral-900 text-white py-3 rounded-2xl hover:bg-neutral-800 transition font-semibold">
+            class="mt-4 w-full bg-[#c9b79c] text-white py-3 rounded-2xl hover:bg-neutral-800 transition font-semibold">
             Copiar código PIX
           </button>
           <p class="text-xs text-neutral-500 mt-4">Escaneie o QR Code ou copie o código.</p>
@@ -452,7 +477,7 @@
       </div>
     </main>
 
-    <!-- SCRIPT JS e SOM-->
+    <!-- SCRIPT JS -->
     <script src="./abas.js"></script>
     <script src="./apoiadores.js"></script>
     <script src="./carrossel.js"></script>
@@ -461,8 +486,3 @@
     <script src="./presentes_git.js"></script>
   </body>
 </html>
-
-
-
-
-
