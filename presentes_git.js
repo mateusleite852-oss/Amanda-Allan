@@ -11,7 +11,7 @@ const whatsappNoivo = '5511986332987'; // Número do WhatsApp para contato
 function mostrarToast(mensagem, tipo = 'erro') {
   const toast = document.createElement('div');
   toast.className = `
-    fixed left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg
+    fixed top-12 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-lg
     font-medium text-white shadow-lg
     ${tipo === 'erro' ? 'bg-red-500' : 'bg-green-500'}
   `;
@@ -549,3 +549,4 @@ function initFiltrosPresentes() {
     renderPresentes();
   });
 }
+
